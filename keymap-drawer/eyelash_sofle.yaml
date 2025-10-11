@@ -27,7 +27,7 @@ layers:
   - O
   - P
   - {t: \, s: '|'}
-  - '&caps_bspc'
+  - {t: '$$mdi:backspace$$', h: '$$mdi:apple-keyboard-caps$$'}
   - A
   - S
   - D
