@@ -157,7 +157,7 @@ layers:
   - F12
   - _
   - +
-  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '$$mdi:toggle-switch$$', h: '$$mdi:bluetooth$$', s: '$$mdi:usb$$'}
   - OUT USB
   - OUT BLE
   - {t: '$$mdi:transfer$$', type: trans}
