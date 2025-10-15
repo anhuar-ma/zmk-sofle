@@ -93,7 +93,7 @@ layers:
   - {t: '-', s: _}
   - {t: '=', s: +}
   - {t: '$$mdi:transfer$$', type: trans}
-  - '&skp LSHFT'
+  - {t: '$$mdi:apple-keyboard-shift$$', h: '$$mdi:gesture-tap-hold$$'}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
