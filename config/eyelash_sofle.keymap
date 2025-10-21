@@ -58,8 +58,8 @@
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <200>;
-            bindings = <&skp RIGHT_SHIFT>, <&kp ESC>;
-        }
+            bindings = <&skq RIGHT_SHIFT>, <&kp ESC>;
+        };
 
         td0: tap_dance_0 {
             compatible = "zmk,behavior-tap-dance";
