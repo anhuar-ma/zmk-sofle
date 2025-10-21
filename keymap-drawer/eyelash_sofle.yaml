@@ -13,7 +13,7 @@ layers:
   - {t: '8', s: '*'}
   - {t: '9', s: (}
   - {t: '0', s: )}
-  - '&td_bspc_caps'
+  - {t: '$$mdi:backspace$$', h: '$$mdi:apple-keyboard-caps$$'}
   - $$mdi:keyboard-tab$$
   - Q
   - W
