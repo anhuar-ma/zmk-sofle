@@ -54,7 +54,7 @@
             bindings = <&kp BACKSPACE>, <&kp CAPS>;
         };
 
-        td_shift_esc : tap_dance_rShift_esc {
+        td_shift_esc: tap_dance_rShift_esc {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <200>;
