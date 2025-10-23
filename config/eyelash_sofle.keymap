@@ -78,10 +78,11 @@
         shift_sl1: shift_sl1 {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&macro_tap &sl 1>,
-                       <&macro_tap &skq LSHFT>;
+            bindings = <&macro_tap &skq LSHFT>,
+                       <&macro_tap &sl 1>;
         };
     };
+
 
     combos {
         compatible = "zmk,combos";
