@@ -37,13 +37,7 @@
         tap-ms = <100>;
     };
 
-    macros {
-        shift_sl1: shift_sl1 {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&macro_press &mo 1 &kp LSHFT>, <&macro_pause_for_release>, <&macro_release &mo 1 &kp LSHFT>;
-        };
-    };
+
 
     behaviors {
         skq: sticky_key_quick_release {
@@ -78,12 +72,14 @@
             bindings = <&mo>, <&sk>;
         };
 
-        sk_shift_layer: sticky_shift_layer {
-            compatible = "zmk,behavior-sticky-key";
-            #binding-cells = <1>;
-            bindings = <&shift_sl1>;
-            release-after-ms = <1000>;
-            quick-release;
+    };
+
+     macros {
+        shift_sl1: shift_sl1 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &sl 1>,
+                       <&macro_tap &skq LSHFT>;
         };
     };
 
@@ -116,7 +112,7 @@
             bindings = <
 &kp F12   &kp F1           &kp F2          &kp F3           &kp F4           &kp F5             &mmv MOVE_UP     &kp F6           &kp F7           &kp F8      &kp F9     &kp F10           &trans
 &trans      &kp F11        &mkp LCLK       &mkp MCLK        &mkp RCLK        &mkp MB4           &mmv MOVE_DOWN   &kp PG_UP        &kp END          &kp UP      &kp HOME   &kp MINUS         &kp EQUAL
-&trans      &sk_shift_layer         &trans          &trans           &trans           &mkp MB5           &mmv MOVE_LEFT   &kp PG_DN        &kp LEFT         &kp DOWN    &kp RIGHT  &kp LEFT_BRACKET  &kp RIGHT_BRACKET
+&trans      &shift_sl1         &trans          &trans           &trans           &mkp MB5           &mmv MOVE_LEFT   &kp PG_DN        &kp LEFT         &kp DOWN    &kp RIGHT  &kp LEFT_BRACKET  &kp RIGHT_BRACKET
 &trans      &rgb_ug RGB_OFF  &rgb_ug RGB_ON  &rgb_ug RGB_EFF  &rgb_ug RGB_EFR  &rgb_ug RGB_SPI    &mmv MOVE_RIGHT  &rgb_ug RGB_BRI  &rgb_ug RGB_BRD  &kp INSERT  &trans     &kp GRAVE           &trans
 &kp C_MUTE  &trans           &trans          &trans           &trans           &trans             &mkp LCLK        &trans           &trans           &trans      &trans     &trans
             >;
