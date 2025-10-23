@@ -85,6 +85,7 @@
             label = "LSHIFT_SL1";
             #binding-cells = <0>;
             bindings = <&sl 1>, <&skq LSHIFT>;
+            wait-ms = <10>;
         };
     };
        
