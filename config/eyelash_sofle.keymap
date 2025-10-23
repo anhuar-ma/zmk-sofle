@@ -73,24 +73,21 @@
         };
 
         sl_ign_mod: sl_ign_mod {
-            compatible = "zmk,behavior-sticky-layer";
+            compatible = "zmk,behavior-sticky-layer-ign-mod";
             label = "SL_IGN_MOD";
             #binding-cells = <1>;
             bindings = <&mo>;
             ignore-modifiers;
         };
-    };
 
-     macros {
-        shift_sl1: shift_sl1 {
+        lshift_sl1: lshift_sl1 {
             compatible = "zmk,behavior-macro";
+            label = "LSHIFT_SL1";
             #binding-cells = <0>;
-            bindings = <&macro_tap &skq LSHFT>,
-                       <&macro_tap &sl_ign_mod 1>;
+            bindings = <&kp LSHIFT &sl 1>;
         };
-
-        
     };
+       
 
 
     combos {
