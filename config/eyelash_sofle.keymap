@@ -84,8 +84,9 @@
             compatible = "zmk,behavior-macro";
             label = "LSHIFT_SL1";
             #binding-cells = <0>;
-            bindings = <&sl 1>, <&skq LSHIFT>;
-            wait-ms = <10>;
+            bindings = <&skq LSHIFT>, <&sl 1>;
+            wait-ms = <5>;
+
         };
     };
        
