@@ -72,6 +72,13 @@
             bindings = <&mo>, <&sk>;
         };
 
+        sl_ign_mod: sl_ign_mod {
+            compatible = "zmk,behavior-sticky-layer";
+            label = "SL_IGN_MOD";
+            #binding-cells = <1>;
+            bindings = <&mo>;
+            ignore-modifiers;
+        };
     };
 
      macros {
@@ -79,8 +86,10 @@
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&macro_tap &skq LSHFT>,
-                       <&macro_tap &sl 1>;
+                       <&macro_tap &sl_ign_mod 1>;
         };
+
+        
     };
 
 
