@@ -84,10 +84,7 @@
             compatible = "zmk,behavior-macro";
             label = "LSHIFT_SL1";
             #binding-cells = <0>;
-            bindings = <&skq LSHIFT>, <&sl 1>;
-            tap-ms = <5>;
-
-
+            bindings = <&skq LSHIFT>, <&sl_ign_mod 1>;
         };
     };
        
