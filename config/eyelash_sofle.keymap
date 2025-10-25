@@ -96,6 +96,7 @@
             bindings = <&mo>;
             release-after-ms = <1000>;
             ignore-modifiers;
+        };
 
          lshift_sl1: lshift_sl1 {
             compatible = "zmk,behavior-macro";
