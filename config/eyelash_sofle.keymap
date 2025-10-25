@@ -104,7 +104,7 @@
             #binding-cells = <0>;
             tap-ms = <0>;
             wait-ms = <0>;
-            bindings = <&macro_press &sl 1>, <&skp LSHIFT>;
+            bindings = <&macro_press &sl 1>, <&skq LSHIFT>;
         };
 
     };
