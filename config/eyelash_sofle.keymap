@@ -89,6 +89,14 @@
             wait-ms = <0>;
             bindings = <&skq LSHIFT>, <&sl 1>;
         };
+
+        sl_no_quick_release: sticky_layer_no_quick_release {
+            compatible = "zmk,behavior-sticky-key";
+            #binding-cells = <1>;
+            bindings = <&mo>;
+            release-after-ms = <1000>;
+            ignore-modifiers;
+        };
     };
        
 
@@ -111,7 +119,7 @@
 &kp TAB     &kp Q      &kp W         &kp E         &kp R   &kp T        &kp DOWN_ARROW   &kp Y      &kp U      &kp I      &kp O            &kp P       &kp BSLH
 &kp BACKSPACE    &kp A      &kp S         &kp D         &kp F   &kp G        &kp LEFT_ARROW   &kp H      &kp J      &kp K      &kp L            &kp SEMI    &kp APOS
 &skq LSHFT   &kp Z      &kp X         &kp C         &kp V   &kp B        &kp RIGHT_ARROW  &kp N      &kp M      &kp COMMA  &kp DOT          &kp FSLH    &skq RIGHT_SHIFT
-&kp C_MUTE  &skq LCTRL  &skq LEFT_GUI  &skq LEFT_ALT  &kp ENTER  &sl 1 &kp ENTER           &mo 2      &kp SPACE  &td_shift_esc &skq RIGHT_ALT   &kp DELETE
+&kp C_MUTE  &skq LCTRL  &skq LEFT_GUI  &skq LEFT_ALT  &kp ENTER  &sl_no_quick_release 1 &kp ENTER           &mo 2      &kp SPACE  &td_shift_esc &skq RIGHT_ALT   &kp DELETE
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOL_DN>;
