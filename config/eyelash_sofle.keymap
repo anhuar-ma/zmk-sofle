@@ -104,7 +104,8 @@
             label = "LSHIFT_SL12";
             #binding-cells = <0>;
             wait-ms = <0>;
-            bindings = <macro_press &sl 1 &skp LSHIFT >;
+            tap-ms = <0>;
+            bindings = <&sl 1 &skq LSHIFT>;
         };
 
                       
