@@ -103,7 +103,7 @@
             label = "LSHIFT_SL12";
             #binding-cells = <0>;
             wait-ms = <0>;
-            bindings = <&sl 1 &skq LSHIFT &sl 1>;
+            bindings = <&sl 1> <&skq LSHIFT &sl 1>;
         };
 
     };
