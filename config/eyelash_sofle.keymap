@@ -170,7 +170,7 @@
 
         sticky_shift_macro: sticky_shift_macro {
             compatible = "zmk,behavior-sticky-key";
-            #binding-cells = <0>;
+            #binding-cells = <1>;
             
             // The behavior to make sticky is our macro
             bindings = <&shift_to_1>;
@@ -184,7 +184,7 @@
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <200>;
-            bindings = <&sl 1>, <&sticky_shift_macro>;
+            bindings = <&sl 1>, <&sticky_shift_macro 0>;
         };
 
     };
