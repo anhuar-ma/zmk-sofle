@@ -152,7 +152,7 @@
             tapping-term-ms = <200>;
             quick-tap-ms = <200>;
             flavor = "tap-preferred";
-            bindings = <&skp>, <&sl>;
+            bindings = <&skq>, <&sl>;
         };
 
         td_sl1_shift: tap_dance_sl1_shift {
