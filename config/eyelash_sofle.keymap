@@ -176,7 +176,7 @@
             
             // The behavior to make sticky is our macro
             bindings = <&shift_to_1>;
-            
+            release-after-ms = <1000>;   // Use a suitable value for your use-case
             // 'quick-release' makes it a "one-shot" behavior.
             // It will release after the next key press.
             quick-release;
