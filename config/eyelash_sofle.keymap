@@ -155,11 +155,38 @@
             bindings = <&skq>, <&sl>;
         };
 
+
+
+        // A macro named "shift_to_1"
+        shift_to_1: shift_to_1 {
+            compatible = "zmk,behavior-macro";
+            label = "SHIFT_TO_1";
+            #binding-cells = <0>;
+            bindings =
+                // Press and HOLD Left Shift
+                <&macro_press &kp LSHIFT>,
+                // Switch to layer 1
+                <&macro_tap &to 1>;
+        };
+
+        sticky_shift_macro: sticky_shift_macro {
+            compatible = "zmk,behavior-sticky-key";
+            label = "STICKY_SHIFT_MACRO";
+            #binding-cells = <1>;
+            
+            // The behavior to make sticky is our macro
+            bindings = <&shift_to_1>;
+            
+            // 'quick-release' makes it a "one-shot" behavior.
+            // It will release after the next key press.
+            quick-release;
+        };
+
         td_sl1_shift: tap_dance_sl1_shift {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <200>;
-            bindings = <&sl 1>, <&sl1_shift_hold LSHIFT 1>;
+            bindings = <&sl 1>, <&sticky_shift_macro>;
         };
 
     };
