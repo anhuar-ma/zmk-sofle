@@ -28,9 +28,9 @@ layers:
   - P
   - {t: \, s: '|'}
   - {t: '$$mdi:backspace$$', type: backspace}
-  - A
-  - S
-  - D
+  - {t: A, h: '$$mdi:apple-keyboard-control$$'}
+  - {t: S, h: '$$mdi:apple-keyboard-option$$'}
+  - {t: D, h: '$$mdi:apple-keyboard-command$$'}
   - F
   - G
   - $$mdi:arrow-left-bold$$
@@ -58,7 +58,7 @@ layers:
   - {t: '$$mdi:apple-keyboard-command$$', h: '$$mdi:gesture-tap-hold$$'}
   - {t: '$$mdi:apple-keyboard-option$$', h: '$$mdi:gesture-tap-hold$$'}
   - {t: '$$mdi:keyboard-return$$', type: enter}
-  - {t: layer1, h: '$$mdi:gesture-tap-hold$$'}
+  - '&td_sl1_shift'
   - {t: '$$mdi:keyboard-return$$', type: enter}
   - layer2
   - $$mdi:keyboard-space$$
@@ -123,7 +123,7 @@ layers:
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
-  - {type: held}
+  - {t: '$$mdi:transfer$$', type: trans}
   - $$mdi:mouse-left-click-outline$$
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
