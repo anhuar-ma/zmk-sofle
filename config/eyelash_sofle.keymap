@@ -97,7 +97,7 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             bindings = <&skq LSHIFT>, <&sl 1>;
-        };
+        }
 
         sl_no_quick_release: sticky_layer_no_quick_release {
             compatible = "zmk,behavior-sticky-key";
@@ -122,7 +122,7 @@
             #binding-cells = <2>;
             flavor = "balanced";
             require-prior-idle-ms = <150>;
-            tapping-term-ms = <280>;
+            tapping-term-ms = <200>;
             quick-tap-ms = <175>;
             bindings = <&skq>, <&kp>;
            hold-trigger-on-release;
@@ -146,11 +146,20 @@
             hold-trigger-on-release;
         };
 
+        sl1_shift_hold: sl1_shift_hold {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <200>;
+            flavor = "tap-preferred";
+            bindings = <&skp>, <&sl>;
+        };
+
         td_sl1_shift: tap_dance_sl1_shift {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <200>;
-            bindings = <&sl 1>, <&lshift_sl1>;
+            bindings = <&sl 1>, <&sl1_shift_hold LSHIFT 1>;
         };
 
     };
