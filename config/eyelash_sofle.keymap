@@ -160,7 +160,6 @@
         // A macro named "shift_to_1"
         shift_to_1: shift_to_1 {
             compatible = "zmk,behavior-macro";
-            label = "SHIFT_TO_1";
             #binding-cells = <0>;
             bindings =
                 // Press and HOLD Left Shift
@@ -171,8 +170,7 @@
 
         sticky_shift_macro: sticky_shift_macro {
             compatible = "zmk,behavior-sticky-key";
-            label = "STICKY_SHIFT_MACRO";
-            #binding-cells = <1>;
+            #binding-cells = <0>;
             
             // The behavior to make sticky is our macro
             bindings = <&shift_to_1>;
