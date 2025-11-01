@@ -97,7 +97,7 @@
             #binding-cells = <0>;
             wait-ms = <0>;
             bindings = <&skq LSHIFT>, <&sl 1>;
-        }
+        };
 
         sl_no_quick_release: sticky_layer_no_quick_release {
             compatible = "zmk,behavior-sticky-key";
