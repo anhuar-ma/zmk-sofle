@@ -166,6 +166,7 @@
                 <&macro_press &kp LSHIFT>,
                 // Switch to layer 1
                 <&macro_tap &to 1>;
+                <&macro_release &kp LSHIFT>,
         };
 
         sticky_shift_macro: sticky_shift_macro {
@@ -178,6 +179,7 @@
             // 'quick-release' makes it a "one-shot" behavior.
             // It will release after the next key press.
             quick-release;
+            ignore-modifiers;
         };
 
         td_sl1_shift: tap_dance_sl1_shift {
