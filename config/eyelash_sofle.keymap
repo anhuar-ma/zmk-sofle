@@ -165,8 +165,8 @@
                 // Press and HOLD Left Shift
                 <&macro_press &kp LSHIFT>,
                 // Switch to layer 1
-                <&macro_tap &to 1>;
-                <&macro_release &kp LSHIFT>,
+                <&macro_tap &to 1>,
+                <&macro_release &kp LSHIFT>;
         };
 
         sticky_shift_macro: sticky_shift_macro {
