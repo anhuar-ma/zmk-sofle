@@ -125,6 +125,7 @@
             tapping-term-ms = <200>;
             quick-tap-ms = <175>;
             bindings = <&skq>, <&kp>;
+            release-after-ms = <1000>;
         };
 
         hmr: home_row_mod_right {
