@@ -124,7 +124,7 @@
             require-prior-idle-ms = <150>;
             tapping-term-ms = <200>;
             quick-tap-ms = <175>;
-            bindings = <&kp>, <&kp>;
+            bindings = <&skq>, <&kp>;
         };
 
         hmr: home_row_mod_right {
