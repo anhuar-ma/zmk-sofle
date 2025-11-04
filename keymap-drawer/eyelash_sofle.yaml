@@ -28,9 +28,9 @@ layers:
   - P
   - {t: \, s: '|'}
   - {t: '$$mdi:backspace$$', type: backspace}
-  - {t: A, h: '$$mdi:apple-keyboard-control$$'}
-  - {t: S, h: '$$mdi:apple-keyboard-option$$'}
-  - {t: D, h: '$$mdi:apple-keyboard-command$$'}
+  - {t: A, h: '&kq LCTRL'}
+  - {t: S, h: '&kq LEFT_ALT'}
+  - {t: D, h: '&kq LEFT_GUI'}
   - F
   - G
   - $$mdi:arrow-left-bold$$
