@@ -48,6 +48,14 @@
             quick-release;
             ignore-modifiers;
         };
+        skq2: sticky_key_quick_release2 {
+            compatible = "zmk,behavior-sticky-key";
+            #binding-cells = <1>;
+            bindings = <&kp>;
+            release-after-ms = <1400>;
+            quick-release;
+            ignore-modifiers;
+        };
 
         skq_mo1: sticky_key_lshift_mo1 {
             compatible = "zmk,behavior-macro";
@@ -124,8 +132,7 @@
             require-prior-idle-ms = <150>;
             tapping-term-ms = <200>;
             quick-tap-ms = <175>;
-            hold-trigger-on-release;
-            bindings = <&skq>, <&kp>;
+            bindings = <&skq2>, <&kp>;
         };
 
         hmr: home_row_mod_right {
