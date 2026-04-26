@@ -199,7 +199,7 @@
             bindings = <&sl 1>, <&sticky_shift_macro 0>;
         };
 
-        ht_j_down: hold_tap_j_down {
+        ht_: hold_tap_j_down {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             tapping-term-ms = <200>;
@@ -207,43 +207,6 @@
             flavor = "tap-preferred";
             bindings = <&kp>, <&kp>;
         };
-
-        ht_k_up: hold_tap_k_up {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-            quick-tap-ms = <100>;
-            flavor = "tap-preferred";
-            bindings = <&kp>, <&kp>;
-        };
-
-        ht_l_right: hold_tap_l_right {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-            quick-tap-ms = <100>;
-            flavor = "tap-preferred";
-            bindings = <&kp>, <&kp>;
-        };
-
-        ht_semi_left: hold_tap_semi_left {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-            quick-tap-ms = <100>;
-            flavor = "tap-preferred";
-            bindings = <&kp>, <&kp>;
-        };
-
-        ht_space_esc: hold_tap_space_esc {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-            quick-tap-ms = <100>;
-            flavor = "tap-preferred";
-            bindings = <&kp>, <&kp>;
-        };
-
     };
 
        
@@ -265,9 +228,9 @@
             bindings = <
 &kp ESC     &kp N1     &kp N2        &kp N3        &kp N4  &kp N5       &kp UP_ARROW     &kp N6     &kp N7     &kp N8     &kp N9           &kp N0      &mt CAPS BACKSPACE
 &kp TAB     &kp Q      &kp W         &kp E         &kp R   &kp T        &kp DOWN_ARROW   &kp Y      &kp U      &kp I      &kp O            &kp P       &kp BSLH
-&kp BACKSPACE    &hml LCTRL A   &hml LEFT_ALT S   &hml LEFT_GUI D   &kp F   &kp G        &kp LEFT_ARROW   &kp H      &ht_j_down DOWN J      &ht_k_up UP K      &ht_l_right RIGHT L            &ht_semi_left LEFT SEMI    &kp APOS
+&kp BACKSPACE    &hml LCTRL A   &hml LEFT_ALT S   &hml LEFT_GUI D   &kp F   &kp G        &kp LEFT_ARROW   &kp H      &ht_ UP_ARROW J      &ht_ DOWN_ARROW K      &ht_ LEFT_ARROW L  &ht_ RIGHT_ARROW SEMI    &kp APOS
 &skq LSHFT   &kp Z      &kp X         &kp C         &kp V   &kp B        &kp RIGHT_ARROW  &kp N      &kp M      &kp COMMA  &kp DOT          &kp FSLH    &skq RIGHT_SHIFT
-&kp C_MUTE  &skq LCTRL  &skq LEFT_GUI  &skq LEFT_ALT  &kp ENTER  &td_sl1_shift &kp ENTER           &mo 2      &ht_space_esc ESC SPACE  &td_shift_esc &skq RIGHT_ALT   &kp DELETE
+&kp C_MUTE  &skq LCTRL  &skq LEFT_GUI  &skq LEFT_ALT  &kp ENTER  &td_sl1_shift &kp ENTER           &mo 2      &ht_ ESC SPACE  &td_shift_esc &skq RIGHT_ALT   &kp DELETE
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOL_DN>;
