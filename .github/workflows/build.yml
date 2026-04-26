@@ -7,5 +7,5 @@ on:
 
 jobs:
   build:
-    uses: anhuar-ma/zmk/.github/workflows/build-user-config.yml@main
+    uses: anhuar-ma/zmk/.github/workflows/build-user-config.yml@v0.3.0
 
