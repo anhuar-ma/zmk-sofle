@@ -265,9 +265,9 @@
             bindings = <
 &kp ESC    &kp N1         &kp N2        &kp N3         &kp N4              &kp N5            &kp UP_ARROW      &kp N6              &kp N7         &kp N8        &kp N9         &kp N0            &mt CAPS BSPC
 &kp TAB    &kp Q          &kp W         &kp E          &kp R               &kp T             &kp DOWN_ARROW    &kp Y               &kp U          &kp I         &kp O          &kp P             &kp BSLH
-&kp BACKSPACE  &hml LCTRL A   &hml LALT S   &hml LGUI D    &hml LSHFT F        &hra ESC G             &kp LEFT_ARROW    &hra ESC H          &hra UP J      &hra DOWN K   &hra LEFT L    &hra RIGHT SEMI   &kp APOS
-&kp LSHFT  &kp Z          &kp X         &kp C          &kp V               &kp B             &kp RIGHT_ARROW   &kp N               &kp M          &kp COMMA     &kp DOT        &kp FSLH          &kp RSHFT
-&kp C_MUTE &kp LCTRL      &kp LGUI      &kp LALT       &kp_slh SYM ENTER &ltq SYM SYM         &kp ENTER             &ltq NAV NAV &kp_slh NAV SPACE        &lt_thumb SYM TAB  &kp RALT  &kp DEL
+&kp BACKSPACE  &hml LCTRL A   &hml LALT S   &hml LGUI D  &hra ESC F  &hml LSHFT G                     &kp LEFT_ARROW    &hra ESC H          &hra UP J      &hra DOWN K   &hra LEFT L    &hra RIGHT SEMI   &kp APOS
+&sk LSHFT  &kp Z          &kp X         &kp C          &kp V               &kp B             &kp RIGHT_ARROW   &kp N               &kp M          &kp COMMA     &kp DOT        &kp FSLH          &sk RSHFT
+&kp C_MUTE &kp LCTRL      &kp LGUI      &kp LALT       &kp_slh SYM ENTER &ltq SYM SYM      &kp ENTER             &kp ESC &kp_slh NAV SPACE        &lt_thumb SYM TAB  &kp RALT  &kp DEL
             >;
             sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOL_DN>;
         };
