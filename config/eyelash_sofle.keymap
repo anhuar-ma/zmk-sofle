@@ -300,7 +300,7 @@
             bindings = <
 &trans     &kp F1      &kp F2      &kp F3      &kp F4      &kp F5          &mmv MOVE_UP     &kp F6       &kp F7       &kp F8       &kp F9       &kp F10      &trans
 &kp TILDE  &kp EXCL    &kp AT      &kp HASH    &kp DLLR    &kp PRCNT       &mmv MOVE_DOWN   &kp CARET    &kp AMPS     &kp ASTRK    &kp LPAR     &kp RPAR     &kp MINUS 
-&kp GRAVE  &kp LCTRL   &kp LALT    &kp LGUI    &kp LSHFT   &kp PLUS        &mmv MOVE_LEFT   &kp MINUS    &kp EQUAL    &kp LBRC     &kp RBRC     &kp COLON    &kp UNDER
+&kp GRAVE  &kp LCTRL   &kp LALT    &kp LGUI    &kp LSHFT   &kp PLUS        &mmv MOVE_LEFT   &kp PLUS    &kp EQUAL    &kp LBRC     &kp RBRC     &kp COLON    &kp UNDER
 &trans     &kp UNDER   &kp LT      &to CMK     &kp GT      &kp BSLH        &mmv MOVE_RIGHT  &kp SLASH    &kp QMARK    &kp LBKT     &kp RBKT     &kp SEMI     &trans
 &trans     &trans      &trans      &trans      &trans      &trans          &mkp LCLK        &trans       &trans       &trans       &trans       &trans
             >;
