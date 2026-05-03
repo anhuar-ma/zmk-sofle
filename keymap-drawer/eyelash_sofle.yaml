@@ -31,8 +31,8 @@ layers:
   - {t: A, h: '$$mdi:apple-keyboard-control$$'}
   - {t: S, h: '$$mdi:apple-keyboard-option$$'}
   - {t: D, h: LGUI}
-  - {t: F, h: '$$mdi:apple-keyboard-shift$$'}
-  - {t: G, h: '$$mdi:keyboard-esc$$'}
+  - {t: F, h: '$$mdi:keyboard-esc$$'}
+  - {t: G, h: '$$mdi:apple-keyboard-shift$$'}
   - $$mdi:arrow-left-bold$$
   - {t: H, h: '$$mdi:keyboard-esc$$'}
   - {t: J, h: '$$mdi:arrow-up-bold$$'}
@@ -40,7 +40,7 @@ layers:
   - {t: L, h: '$$mdi:arrow-left-bold$$'}
   - {t: ;, h: '$$mdi:arrow-right-bold$$', s: ':'}
   - {t: '''', s: '"'}
-  - $$mdi:apple-keyboard-shift$$
+  - {t: '$$mdi:apple-keyboard-shift$$', h: '$$mdi:gesture-tap-hold$$'}
   - Z
   - X
   - C
@@ -52,7 +52,7 @@ layers:
   - {t: ',', s: <}
   - {t: ., s: '>'}
   - {t: /, s: '?'}
-  - $$mdi:apple-keyboard-shift$$
+  - {t: '$$mdi:apple-keyboard-shift$$', h: '$$mdi:gesture-tap-hold$$'}
   - $$mdi:volume-off$$
   - $$mdi:apple-keyboard-control$$
   - LGUI
@@ -60,7 +60,7 @@ layers:
   - {t: '$$mdi:keyboard-return$$', h: SYM}
   - {t: SYM, h: SYM}
   - {t: '$$mdi:keyboard-return$$', type: enter}
-  - {t: NAV, h: NAV}
+  - $$mdi:keyboard-esc$$
   - {t: '$$mdi:keyboard-space$$', h: NAV}
   - {t: '$$mdi:keyboard-tab$$', h: SYM}
   - $$mdi:apple-keyboard-option$$
@@ -125,8 +125,8 @@ layers:
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - $$mdi:mouse-left-click-outline$$
-  - {t: '0', s: ), type: held}
-  - {t: ., s: '>', type: held alternate}
+  - {t: '0', s: )}
+  - {t: ., s: '>', type: held}
   - {t: ',', s: <}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
@@ -385,7 +385,7 @@ layers:
   - {type: held}
   - {type: held}
   - $$mdi:mouse-left-click-outline$$
-  - {type: held}
+  - {t: '$$mdi:transfer$$', type: trans}
   - {type: held}
   - {type: held}
   - {t: '$$mdi:transfer$$', type: trans}
