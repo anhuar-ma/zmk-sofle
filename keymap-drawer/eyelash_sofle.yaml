@@ -164,7 +164,7 @@ layers:
   - $$mdi:apple-keyboard-shift$$
   - +
   - {t: '$$mdi:menu-left$$', s: '$$mdi:mouse$$'}
-  - {t: '-', s: _}
+  - +
   - {t: '=', s: +}
   - '{'
   - '}'
