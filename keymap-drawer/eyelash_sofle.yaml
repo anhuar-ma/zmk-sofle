@@ -156,7 +156,7 @@ layers:
   - '*'
   - (
   - )
-  - '|'
+  - {t: '-', s: _}
   - {t: '`', s: '~'}
   - $$mdi:apple-keyboard-control$$
   - $$mdi:apple-keyboard-option$$
@@ -169,7 +169,7 @@ layers:
   - '{'
   - '}'
   - ':'
-  - '"'
+  - _
   - {t: '$$mdi:transfer$$', type: trans}
   - _
   - <
@@ -390,16 +390,3 @@ layers:
   - {type: held}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
-combos:
-- p: [14, 28, 40]
-  k: '&soft_off'
-  l: [BASE, CMK-DH]
-- p: [20, 21]
-  k: $$mdi:keyboard-esc$$
-  l: [BASE, CMK-DH]
-- p: [34, 35]
-  k: $$mdi:keyboard-tab$$
-  l: [BASE, CMK-DH]
-- p: [29, 30]
-  k: $$mdi:alpha-w-box$$
-  l: [BASE, CMK-DH]
