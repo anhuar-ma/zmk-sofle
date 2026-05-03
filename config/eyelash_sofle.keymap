@@ -1,5 +1,32 @@
-#define ZMK_POINTING_DEFAULT_MOVE_VAL 1200  // 600
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 25   // 10
+/*
+ * Eyelash Sofle — ZMK keymap
+ *
+ * Layers:
+ *   0 = BASE   QWERTY + home-row mods on both hands
+ *   1 = NAV    Navigation / numpad / mouse buttons   (hold L-thumb SPACE)
+ *   2 = SYM    Symbols                               (hold R-thumb BSPC or TAB)
+ *   3 = CMK    Colemak-DH + HRM                      (toggle in via SYM + C)
+ *   4 = SYMC   SYM while on Colemak (C -> back to BASE)
+ *   5 = FN     Function / media / BT / RGB / system  (tri-layer NAV+SYM)
+ *
+ * Thumb cluster (outer -> inner, 5 per side):
+ *   L: MUTE | CTRL | GUI | ALT | ENTER | SPACE/NAV
+ *   R: ENTER/SYM | ESC | TAB/SYM | RALT | DEL
+ * (Note: the row has one extra "inner" key vs a typical Sofle — 5 thumbs + 1.)
+ *
+ * Home-row mods / holds:
+ *   L (mods):   A=Ctrl  S=Alt  D=GUI  F=Shift
+ *   R (arrows): J=UP    K=DOWN  L=LEFT  ;=RIGHT    (tap = letter, hold = arrow)
+ *
+ * Combos (BASE and CMK layers):
+ *   J+K       -> ESC
+ *   M+,       -> TAB
+ *   C+V       -> Caps Word
+ *   14+28+40  -> soft_off (power down)
+ */
+
+#define ZMK_POINTING_DEFAULT_MOVE_VAL 1200
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 25
 
 #include <input/processors.dtsi>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
@@ -10,141 +37,98 @@
 #include <dt-bindings/zmk/pointing.h>
 #include <dt-bindings/zmk/rgb.h>
 
-&mmv_input_listener { input-processors = <&zip_xy_scaler 2 1>; };
+/* Layer aliases (must match declaration order in keymap { } below). */
+#define BASE 0
+#define NAV  1
+#define SYM  2
+#define CMK  3
+#define SYMC 4
+#define FN   5
 
+/* ------------------------------------------------------------------
+ * Pointing devices (trackball + scroll wheel) — kept from prior tuning.
+ * ------------------------------------------------------------------ */
+&mmv_input_listener { input-processors = <&zip_xy_scaler 2 1>; };
 &msc_input_listener { input-processors = <&zip_scroll_scaler 2 1>; };
 
 &msc {
-    acceleration-exponent = <1>;      // 0
-    time-to-max-speed-ms = <100>;       // 300
-    delay-ms = <0>;                   // 0
+    acceleration-exponent = <1>;
+    time-to-max-speed-ms  = <100>;
+    delay-ms              = <0>;
 };
 
 &mmv {
-    time-to-max-speed-ms = <500>;
+    time-to-max-speed-ms  = <500>;
     acceleration-exponent = <1>;
-    trigger-period-ms = <16>;
+    trigger-period-ms     = <16>;
 };
 
 &soft_off { hold-time-ms = <2000>; };
 
+/* Caps-word continuation: let it survive common word separators. */
+&caps_word { continue-list = <UNDERSCORE MINUS BACKSPACE DELETE>; };
+
 / {
+    /* Tri-layer: holding NAV and SYM simultaneously activates FN. */
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        tri_layer {
+            if-layers = <NAV SYM>;
+            then-layer = <FN>;
+        };
+    };
+
     scroll_encoder: scroll_encoder {
         compatible = "zmk,behavior-sensor-rotate";
         #sensor-binding-cells = <0>;
         bindings = <&msc SCRL_DOWN>, <&msc SCRL_UP>;
-
         tap-ms = <100>;
     };
 
-
-
     behaviors {
-        skq: sticky_key_quick_release {
-            compatible = "zmk,behavior-sticky-key";
-            #binding-cells = <1>;
-            bindings = <&kp>;
-            release-after-ms = <1000>;
-            quick-release;
-            ignore-modifiers;
-        };
-        skq2: sticky_key_quick_release2 {
-            compatible = "zmk,behavior-sticky-key";
-            #binding-cells = <1>;
-            bindings = <&kp>;
-            release-after-ms = <1400>;
-            quick-release;
-            ignore-modifiers;
-        };
-
-        skq_mo1: sticky_key_lshift_mo1 {
-            compatible = "zmk,behavior-macro";
-            label = "SKQ_MO1";
-            #binding-cells = <0>;
-            bindings = <&sl 1>, <&skq LSHIFT>;
-        };
-
-        td_bspc_caps: tap_dance_backspace_caps {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
-            tapping-term-ms = <200>;
-            bindings = <&kp BACKSPACE>, <&kp CAPS>;
-        };
-
-        td_shift_esc: tap_dance_rShift_esc {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
-            tapping-term-ms = <200>;
-            bindings = <&skq RIGHT_SHIFT>, <&kp ESC>;
-        };
-
-        skmo: sticky_key_mo {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-            quick-tap-ms = <0>;
-            flavor = "tap-preferred";
-            bindings = <&mo>, <&sk>;
-        };
-
-        /* removed custom sl_ign_mod behavior: no matching devicetree binding YAML exists
-           Use the standard sticky layer 'sl' in behavior bindings instead.
-              hold-trigger-key-positions = <
-                6 7 8 9 10 11 12
-                19 20 21 22 23 24 25
-                32 33 34 35 36 37 38
-                45 46 47 48 49 50 51
-                58 59 60 61 62 63
-            >;
- 
-            */
-
-        lshift_sl1: lshift_sl1 {
-            compatible = "zmk,behavior-macro";
-            label = "LSHIFT_SL1";
-            #binding-cells = <0>;
-            wait-ms = <0>;
-            bindings = <&skq LSHIFT>, <&sl 1>;
-        };
-
-        sl_no_quick_release: sticky_layer_no_quick_release {
-            compatible = "zmk,behavior-sticky-key";
-            #binding-cells = <1>;
-            bindings = <&mo>;
-            release-after-ms = <1000>;
-            ignore-modifiers;
-        };
-
-         lshift_sl12: lshift_sl12 {
-            compatible = "zmk,behavior-macro";
-            label = "LSHIFT_SL12";
-            #binding-cells = <0>;
-            tap-ms = <0>;
-            wait-ms = <0>;
-            bindings = <&sl 1 &skq LSHIFT &sl 1>;
-
-        };
-
+        /* Home-row mods (left hand).
+         *
+         *   Tap  = letter (A / S / D / F)
+         *   Hold + other key + release  = Ctrl/Alt/GUI/Shift + that key
+         *   Hold + release alone        = sticky mod for the NEXT keypress only
+         *                                 (one-shot, auto-releases after)
+         *
+         * - balanced flavor is forgiving for fast typists
+         * - require-prior-idle-ms prevents mods after rolling letters
+         * - hold-trigger-key-positions = only the OTHER hand
+         * - hold-trigger-on-release keeps rolls from accidentally modding
+         */
         hml: home_row_mod_left {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             flavor = "balanced";
-            require-prior-idle-ms = <150>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = <220>;
             quick-tap-ms = <175>;
-            bindings = <&skq2>, <&kp>;
+            require-prior-idle-ms = <150>;
+            bindings = <&sk>, <&kp>;
+            hold-trigger-key-positions = <
+                /* Full right hand */
+                6  7  8  9  10 11 12
+                19 20 21 22 23 24 25
+                32 33 34 35 36 37 38
+                45 46 47 48 49 50 51
+                58 59 60 61 62 63
+                /* Other left-hand HRM keys — A+S+D+F can chord together */
+                27 28 29 30
+            >;
+            hold-trigger-on-release;
         };
 
         hmr: home_row_mod_right {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             flavor = "balanced";
-            require-prior-idle-ms = <150>;
-            tapping-term-ms = <280>;
+            tapping-term-ms = <220>;
             quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
             bindings = <&kp>, <&kp>;
             hold-trigger-key-positions = <
-                0 1 2 3 4 5
+                0  1  2  3  4  5
                 13 14 15 16 17 18
                 26 27 28 29 30 31
                 39 40 41 42 43 44
@@ -153,138 +137,225 @@
             hold-trigger-on-release;
         };
 
-        sl1_shift_hold: sl1_shift_hold {
+        /* Right-hand home-row arrows: tap = letter, hold = arrow key.
+         * Uses the same opposite-hand guard so fast right-hand rolls
+         * ("jkl", "kl", "lk") do NOT fire an arrow — an arrow only fires
+         * when the key is held while a key on the LEFT hand is involved,
+         * or held long enough past the tapping term.
+         */
+        hra: home_row_arrow {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
+            flavor = "balanced";
             tapping-term-ms = <200>;
-            quick-tap-ms = <200>;
-            flavor = "tap-preferred";
-            bindings = <&skq>, <&sl>;
-        };
-
-
-
-        // A macro named "shift_to_1"
-        shift_to_1: shift_to_1 {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <0>;
-            tap-ms = <0>;
-            bindings =
-                // Press and HOLD Left Shift and activate layer 1
-                <&macro_press &mo 1 &kp LSHIFT>,
-                // Pause until the macro key is released
-                <&macro_pause_for_release>,
-                // Release both when the key is released
-                <&macro_release &mo 1 &kp LSHIFT>;
-        };
-
-        sticky_shift_macro: sticky_shift_macro {
-            compatible = "zmk,behavior-sticky-key";
-            #binding-cells = <1>;
-            
-            // The behavior to make sticky is our macro
-            bindings = <&shift_to_1>;
-            release-after-ms = <1000>;   // Use a suitable value for your use-case
-            // 'quick-release' makes it a "one-shot" behavior.
-            // It will release after the next key press.
-            quick-release;
-            ignore-modifiers;
-        };
-
-        td_sl1_shift: tap_dance_sl1_shift {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
-            tapping-term-ms = <200>;
-            bindings = <&sl 1>, <&sticky_shift_macro 0>;
-        };
-
-        ht_: hold_tap_j_down {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-            quick-tap-ms = <100>;
-            flavor = "tap-preferred";
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
             bindings = <&kp>, <&kp>;
+            hold-trigger-key-positions = <
+                0  1  2  3  4  5
+                13 14 15 16 17 18
+                26 27 28 29 30 31
+                39 40 41 42 43 44
+                52 53 54 55 56 57
+            >;
+            hold-trigger-on-release;
+        };
+
+        /* Layer-tap tuned for thumbs: snappier hold. */
+        lt_thumb: layer_tap_thumb {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <180>;
+            quick-tap-ms = <150>;
+            bindings = <&mo>, <&kp>;
+        };
+
+        /* "Smart" layer thumb:
+         *   hold = momentary layer (&mo)
+         *   tap  = sticky one-shot layer (&sl)
+         *
+         * Usage: &ltq <layer> <layer>    (same layer twice)
+         *
+         * Behavior:
+         *   - Press and hold → layer is active while held, releases when you let go
+         *     (standard momentary).
+         *   - Quick press and release (< tapping-term-ms) with NO other key pressed
+         *     → layer is sticky: the very next keypress is interpreted on that layer,
+         *     then the layer auto-releases.
+         *   - Press, then press another key before releasing → acts as momentary
+         *     (the held-down layer is what the other key lands on).
+         *
+         * "balanced" flavor + quick-tap-ms=0 so consecutive taps feel predictable.
+         */
+        ltq: layer_tap_or_sticky {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <0>;
+            bindings = <&mo>, <&sl>;
+        };
+
+        /* Tap = kp, Hold = sticky layer.
+         *
+         *   Usage: &kp_slh <layer> <keycode>
+         *
+         *   - Quick tap and release               → kp (e.g. ENTER)
+         *   - Hold past tapping term, press key   → that key lands on <layer>
+         *     (feels like a momentary layer — sticky fires first, next key uses it)
+         *   - Hold past tapping term, release     → <layer> is sticky for the next
+         *     keypress; then auto-releases.
+         *
+         *   'balanced' + require-prior-idle-ms keep it from firing as a sticky layer
+         *   during fast typing.
+         */
+        kp_slh: kp_tap_sticky_layer_hold {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <150>;
+            require-prior-idle-ms = <100>;
+            bindings = <&sl>, <&kp>;
         };
     };
-
-       
-
 
     combos {
         compatible = "zmk,combos";
 
-        softoff {
+        combo_softoff {
             bindings = <&soft_off>;
             key-positions = <14 28 40>;
+            layers = <BASE CMK>;
+        };
+
+        combo_esc {
+            bindings = <&kp ESC>;
+            key-positions = <20 21>;   /* J + K */
+            timeout-ms = <40>;
+            layers = <BASE CMK>;
+        };
+
+        combo_tab {
+            bindings = <&kp TAB>;
+            key-positions = <34 35>;   /* M + , */
+            timeout-ms = <40>;
+            layers = <BASE CMK>;
+        };
+
+        combo_caps_word {
+            bindings = <&caps_word>;
+            key-positions = <29 30>;   /* C + V */
+            timeout-ms = <40>;
+            layers = <BASE CMK>;
         };
     };
 
     keymap {
         compatible = "zmk,keymap";
 
-        layer0 {
+        /* ==================================================================
+         * LAYER 0 — BASE (QWERTY)
+         * ================================================================== */
+        base_layer {
+            display-name = "BASE";
             bindings = <
-&kp ESC     &kp N1     &kp N2        &kp N3        &kp N4  &kp N5       &kp UP_ARROW     &kp N6     &kp N7     &kp N8     &kp N9           &kp N0      &mt CAPS BACKSPACE
-&kp TAB     &kp Q      &kp W         &kp E         &kp R   &kp T        &kp DOWN_ARROW   &kp Y      &kp U      &kp I      &kp O            &kp P       &kp BSLH
-&kp BACKSPACE    &hml LCTRL A   &hml LEFT_ALT S   &hml LEFT_GUI D   &kp F   &kp G        &kp LEFT_ARROW   &kp H      &ht_ UP_ARROW J      &ht_ DOWN_ARROW K      &ht_ LEFT_ARROW L  &ht_ RIGHT_ARROW SEMI    &kp APOS
-&skq LSHFT   &kp Z      &kp X         &kp C         &kp V   &kp B        &kp RIGHT_ARROW  &kp N      &kp M      &kp COMMA  &kp DOT          &kp FSLH    &skq RIGHT_SHIFT
-&kp C_MUTE  &skq LCTRL  &skq LEFT_GUI  &skq LEFT_ALT  &kp ENTER  &td_sl1_shift &kp ENTER           &mo 2      &ht_ ESC SPACE  &td_shift_esc &skq RIGHT_ALT   &kp DELETE
+&kp ESC    &kp N1         &kp N2        &kp N3         &kp N4              &kp N5            &kp UP_ARROW      &kp N6              &kp N7         &kp N8        &kp N9         &kp N0            &mt CAPS BSPC
+&kp TAB    &kp Q          &kp W         &kp E          &kp R               &kp T             &kp DOWN_ARROW    &kp Y               &kp U          &kp I         &kp O          &kp P             &kp BSLH
+&kp BACKSPACE  &hml LCTRL A   &hml LALT S   &hml LGUI D    &hml LSHFT F        &kp G             &kp LEFT_ARROW    &hra ESC H          &hra UP J      &hra DOWN K   &hra LEFT L    &hra RIGHT SEMI   &kp APOS
+&kp LSHFT  &kp Z          &kp X         &kp C          &kp V               &kp B             &kp RIGHT_ARROW   &kp N               &kp M          &kp COMMA     &kp DOT        &kp FSLH          &kp RSHFT
+&kp C_MUTE &kp LCTRL      &kp LGUI      &kp LALT       &kp_slh NAV SPACE &kp ENTER         &kp ENTER         &kp_slh SYM ENTER    &kp ESC        &lt_thumb SYM TAB  &kp RALT  &kp DEL
             >;
-
             sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOL_DN>;
-            display-name = "LAYER0";
         };
 
-        layer_1 {
+        /* ==================================================================
+         * LAYER 1 — NAV / NUM
+         *   Left hand: mouse buttons + left-hand mirror of mods for chords.
+         *   Right hand: arrow cluster + numpad.
+         * ================================================================== */
+        nav_layer {
+            display-name = "NAV";
             bindings = <
-&kp F12   &kp F1           &kp F2          &kp F3           &kp F4           &kp F5             &mmv MOVE_UP     &kp F6           &kp F7           &kp F8      &kp F9     &kp F10           &trans
-&trans      &kp F11        &mkp LCLK       &mkp MCLK        &mkp RCLK        &mkp MB4           &mmv MOVE_DOWN   &kp PG_UP        &kp END          &kp UP      &kp HOME   &kp MINUS         &kp EQUAL
-&trans      &lshift_sl12         &trans          &trans           &trans           &mkp MB5           &mmv MOVE_LEFT   &kp PG_DN        &kp LEFT         &kp DOWN    &kp RIGHT  &kp LEFT_BRACKET  &kp RIGHT_BRACKET
-&trans      &rgb_ug RGB_OFF  &rgb_ug RGB_ON  &rgb_ug RGB_EFF  &rgb_ug RGB_EFR  &rgb_ug RGB_SPI    &mmv MOVE_RIGHT  &rgb_ug RGB_BRI  &rgb_ug RGB_BRD  &kp INSERT  &trans     &kp GRAVE           &trans
-&kp C_MUTE  &trans           &trans          &trans           &trans           &trans             &mkp LCLK        &trans           &trans           &trans      &trans     &trans
+&trans     &kp F1      &kp F2      &kp F3      &kp F4      &kp F5          &mmv MOVE_UP     &kp F6      &kp F7     &kp F8     &kp F9     &kp F10     &kp F11
+&trans     &kp ESC     &mkp LCLK   &mkp MCLK   &mkp RCLK   &mkp MB4        &mmv MOVE_DOWN   &kp PG_UP   &kp N7     &kp N8     &kp N9     &kp MINUS   &kp F12
+&trans     &kp LCTRL   &kp LALT    &kp LGUI    &kp LSHFT   &mkp MB5        &mmv MOVE_LEFT   &kp HOME    &kp N4     &kp N5     &kp N6     &kp PLUS    &kp EQUAL
+&trans     &kp K_UNDO  &kp K_CUT   &kp K_COPY  &kp K_PASTE &kp K_REDO      &mmv MOVE_RIGHT  &kp END     &kp N1     &kp N2     &kp N3     &kp ASTRK   &trans
+&trans     &trans      &trans      &trans      &trans      &trans          &mkp LCLK        &kp N0      &kp DOT    &kp COMMA  &trans     &trans
             >;
-
-            display-name = "layer1";
             sensor-bindings = <&scroll_encoder>;
         };
 
-        layer_2 {
+        /* ==================================================================
+         * LAYER 2 — SYM
+         *   Right hand holds the heavy symbol content.
+         *   Left-hand home row mirrors mods so Shift/Ctrl+symbol chords work.
+         *   Position 29 (left hand `C`) -> `&to CMK` toggles Colemak on.
+         * ================================================================== */
+        sym_layer {
+            display-name = "SYM";
             bindings = <
-&kp TILDE  &bt BT_SEL 0  &bt BT_SEL 1    &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4    &mmv MOVE_UP     &kp F6  &kp F7  &kp F8      &kp F9     &kp F10      &trans
-&trans     &bt BT_CLR    &bt BT_CLR_ALL  &trans        &trans        &trans          &mmv MOVE_DOWN   &trans  &trans  &kp F11     &kp F12    &kp UNDER    &kp PLUS
-&out OUT_TOG     &out OUT_USB  &out OUT_BLE    &trans        &trans        &trans          &mmv MOVE_LEFT   &trans  &trans  &trans      &trans     &kp LBRC     &kp RBRC
-&trans     &sys_reset    &trans          &bootloader   &trans        &trans          &mmv MOVE_RIGHT  &trans  &trans  &sys_reset  &soft_off  &bootloader  &trans
-&trans     &trans        &trans          &trans        &trans        &trans          &mkp LCLK        &trans  &trans  &trans      &trans     &trans
+&trans     &kp F1      &kp F2      &kp F3      &kp F4      &kp F5          &mmv MOVE_UP     &kp F6       &kp F7       &kp F8       &kp F9       &kp F10      &trans
+&kp TILDE  &kp EXCL    &kp AT      &kp HASH    &kp DLLR    &kp PRCNT       &mmv MOVE_DOWN   &kp CARET    &kp AMPS     &kp ASTRK    &kp LPAR     &kp RPAR     &kp PIPE
+&kp GRAVE  &kp LCTRL   &kp LALT    &kp LGUI    &kp LSHFT   &kp PLUS        &mmv MOVE_LEFT   &kp MINUS    &kp EQUAL    &kp LBRC     &kp RBRC     &kp COLON    &kp DQT
+&trans     &kp UNDER   &kp LT      &to CMK     &kp GT      &kp BSLH        &mmv MOVE_RIGHT  &kp SLASH    &kp QMARK    &kp LBKT     &kp RBKT     &kp SEMI     &trans
+&trans     &trans      &trans      &trans      &trans      &trans          &mkp LCLK        &trans       &trans       &trans       &trans       &trans
             >;
-
-            display-name = "layer2";
             sensor-bindings = <&scroll_encoder>;
         };
 
-        layer_3 {
+        /* ==================================================================
+         * LAYER 3 — Colemak-DH + HRM
+         *   QWFPB JLUY;        HRM: A=Ctrl R=Alt S=GUI T=Shift
+         *   ARSTG MNEIO              N=Shift E=GUI I=Alt O=Ctrl
+         *   ZXCDV KH,./
+         *   Thumb cluster identical to BASE so muscle memory carries.
+         *   SYM on this layer is SYMC (layer 4) so that `C` returns to BASE.
+         * ================================================================== */
+        colemak_layer {
+            display-name = "CMK-DH";
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&kp ESC        &kp N1        &kp N2        &kp N3         &kp N4              &kp N5           &kp UP_ARROW      &kp N6              &kp N7         &kp N8        &kp N9         &kp N0            &mt CAPS BSPC
+&kp TAB        &kp Q         &kp W         &kp F          &kp P               &kp B            &kp DOWN_ARROW    &kp J               &kp L          &kp U         &kp Y          &kp SEMI          &kp BSLH
+&kp BACKSPACE  &hml LCTRL A  &hml LALT R   &hml LGUI S    &hml LSHFT T        &kp G            &kp LEFT_ARROW    &kp M               &hra ESC N     &hra UP E     &hra DOWN I    &hra LEFT O       &kp APOS
+&kp LSHFT      &kp Z         &kp X         &kp C          &kp D               &kp V            &kp RIGHT_ARROW   &kp K               &kp H          &kp COMMA     &kp DOT        &kp FSLH          &kp RSHFT
+&kp C_MUTE     &kp LCTRL     &kp LGUI      &kp LALT       &kp_slh NAV SPACE   &kp ENTER        &kp ENTER         &kp_slh SYMC ENTER  &kp ESC        &lt_thumb SYMC TAB  &kp RALT  &kp DEL
             >;
+            sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOL_DN>;
+        };
 
-            display-name = "layer3";
+        /* ==================================================================
+         * LAYER 4 — SYMC (SYM while in Colemak)
+         *   Identical to SYM, but the "C" slot at position 29 sends `&to BASE`
+         *   to flip back to QWERTY.
+         * ================================================================== */
+        sym_cmk_layer {
+            display-name = "SYM-C";
+            bindings = <
+&trans     &kp F1      &kp F2      &kp F3      &kp F4      &kp F5          &mmv MOVE_UP     &kp F6       &kp F7       &kp F8       &kp F9       &kp F10      &trans
+&kp TILDE  &kp EXCL    &kp AT      &kp HASH    &kp DLLR    &kp PRCNT       &mmv MOVE_DOWN   &kp CARET    &kp AMPS     &kp ASTRK    &kp LPAR     &kp RPAR     &kp PIPE
+&kp GRAVE  &kp LCTRL   &kp LALT    &kp LGUI    &kp LSHFT   &kp PLUS        &mmv MOVE_LEFT   &kp MINUS    &kp EQUAL    &kp LBRC     &kp RBRC     &kp COLON    &kp DQT
+&trans     &kp UNDER   &kp LT      &to BASE    &kp GT      &kp BSLH        &mmv MOVE_RIGHT  &kp SLASH    &kp QMARK    &kp LBKT     &kp RBKT     &kp SEMI     &trans
+&trans     &trans      &trans      &trans      &trans      &trans          &mkp LCLK        &trans       &trans       &trans       &trans       &trans
+            >;
             sensor-bindings = <&scroll_encoder>;
         };
 
-        layer_4 {
+        /* ==================================================================
+         * LAYER 5 — FN / Media / System / BT   (tri-layer NAV+SYM)
+         *   All the "rare" stuff: bluetooth, RGB, resets, output toggle,
+         *   media controls.
+         * ================================================================== */
+        fn_layer {
+            display-name = "FN/SYS";
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&bt BT_CLR &bt BT_SEL 0     &bt BT_SEL 1      &bt BT_SEL 2     &bt BT_SEL 3     &bt BT_SEL 4      &mmv MOVE_UP     &kp C_BRI_UP  &kp C_BRI_DN  &trans       &trans  &trans  &trans
+&trans     &out OUT_TOG     &out OUT_USB      &out OUT_BLE     &bt BT_CLR_ALL   &trans            &mmv MOVE_DOWN   &kp C_PREV    &kp C_VOL_DN  &kp C_VOL_UP &kp C_NEXT &trans &trans
+&trans     &rgb_ug RGB_TOG  &rgb_ug RGB_EFF   &rgb_ug RGB_EFR  &rgb_ug RGB_SPI  &rgb_ug RGB_SPD   &mmv MOVE_LEFT   &kp C_PP      &kp C_MUTE    &kp C_STOP   &trans  &trans  &trans
+&trans     &rgb_ug RGB_OFF  &rgb_ug RGB_ON    &rgb_ug RGB_BRI  &rgb_ug RGB_BRD  &trans            &mmv MOVE_RIGHT  &sys_reset    &bootloader   &soft_off    &trans  &trans  &trans
+&trans     &trans           &trans            &trans           &trans           &trans            &mkp LCLK        &trans        &trans        &trans       &trans  &trans
             >;
-         display-name = "layer4";
             sensor-bindings = <&scroll_encoder>;
         };
     };
