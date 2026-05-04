@@ -28,17 +28,17 @@ layers:
   - P
   - {t: \, s: '|'}
   - {t: '$$mdi:backspace$$', type: backspace}
-  - {t: A, h: '$$mdi:apple-keyboard-control$$'}
-  - {t: S, h: '$$mdi:apple-keyboard-option$$'}
-  - {t: D, h: LGUI}
-  - {t: F, h: '$$mdi:keyboard-esc$$'}
-  - {t: G, h: '$$mdi:apple-keyboard-shift$$'}
+  - {t: A, h: '$$mdi:apple-keyboard-shift$$'}
+  - {t: S, h: '$$mdi:apple-keyboard-control$$'}
+  - {t: D, h: '$$mdi:apple-keyboard-option$$'}
+  - {t: F, h: LGUI}
+  - {t: G, h: '$$mdi:keyboard-esc$$'}
   - $$mdi:arrow-left-bold$$
-  - {t: H, h: '$$mdi:keyboard-esc$$'}
-  - {t: J, h: '$$mdi:arrow-up-bold$$'}
-  - {t: K, h: '$$mdi:arrow-down-bold$$'}
-  - {t: L, h: '$$mdi:arrow-left-bold$$'}
-  - {t: ;, h: '$$mdi:arrow-right-bold$$', s: ':'}
+  - {t: H, h: '$$mdi:arrow-up-bold$$'}
+  - {t: J, h: '$$mdi:arrow-down-bold$$'}
+  - {t: K, h: '$$mdi:arrow-left-bold$$'}
+  - {t: L, h: '$$mdi:arrow-right-bold$$'}
+  - {t: ;, h: '$$mdi:apple-keyboard-shift$$', s: ':'}
   - {t: '''', s: '"'}
   - {t: '$$mdi:apple-keyboard-shift$$', h: '$$mdi:gesture-tap-hold$$'}
   - Z
@@ -93,10 +93,10 @@ layers:
   - {t: '-', s: _}
   - F12
   - {t: '$$mdi:transfer$$', type: trans}
+  - $$mdi:apple-keyboard-shift$$
   - $$mdi:apple-keyboard-control$$
   - $$mdi:apple-keyboard-option$$
   - LGUI
-  - $$mdi:apple-keyboard-shift$$
   - '&mkp MB5'
   - {t: '$$mdi:menu-left$$', s: '$$mdi:mouse$$'}
   - HOME
@@ -158,11 +158,11 @@ layers:
   - )
   - {t: '-', s: _}
   - {t: '`', s: '~'}
+  - $$mdi:apple-keyboard-shift$$
   - $$mdi:apple-keyboard-control$$
   - $$mdi:apple-keyboard-option$$
   - LGUI
-  - $$mdi:apple-keyboard-shift$$
-  - +
+  - '"'
   - {t: '$$mdi:menu-left$$', s: '$$mdi:mouse$$'}
   - +
   - {t: '=', s: +}
@@ -223,19 +223,19 @@ layers:
   - {t: ;, s: ':'}
   - {t: \, s: '|'}
   - {t: '$$mdi:backspace$$', type: backspace}
-  - {t: A, h: '$$mdi:apple-keyboard-control$$'}
-  - {t: R, h: '$$mdi:apple-keyboard-option$$'}
-  - {t: S, h: LGUI}
-  - {t: T, h: '$$mdi:apple-keyboard-shift$$'}
-  - G
+  - {t: A, h: '$$mdi:apple-keyboard-shift$$'}
+  - {t: R, h: '$$mdi:apple-keyboard-control$$'}
+  - {t: S, h: '$$mdi:apple-keyboard-option$$'}
+  - {t: T, h: LGUI}
+  - {t: G, h: '$$mdi:keyboard-esc$$'}
   - $$mdi:arrow-left-bold$$
-  - M
-  - {t: N, h: '$$mdi:keyboard-esc$$'}
-  - {t: E, h: '$$mdi:arrow-up-bold$$'}
-  - {t: I, h: '$$mdi:arrow-down-bold$$'}
-  - {t: O, h: '$$mdi:arrow-left-bold$$'}
+  - {t: M, h: '$$mdi:arrow-up-bold$$'}
+  - {t: N, h: '$$mdi:arrow-down-bold$$'}
+  - {t: E, h: '$$mdi:arrow-left-bold$$'}
+  - {t: I, h: '$$mdi:arrow-right-bold$$'}
+  - {t: O, h: '$$mdi:apple-keyboard-shift$$'}
   - {t: '''', s: '"'}
-  - $$mdi:apple-keyboard-shift$$
+  - {t: '$$mdi:apple-keyboard-shift$$', h: '$$mdi:gesture-tap-hold$$'}
   - Z
   - X
   - C
@@ -247,16 +247,16 @@ layers:
   - {t: ',', s: <}
   - {t: ., s: '>'}
   - {t: /, s: '?'}
-  - $$mdi:apple-keyboard-shift$$
+  - {t: '$$mdi:apple-keyboard-shift$$', h: '$$mdi:gesture-tap-hold$$'}
   - $$mdi:volume-off$$
   - $$mdi:apple-keyboard-control$$
   - LGUI
   - $$mdi:apple-keyboard-option$$
-  - {t: '$$mdi:keyboard-space$$', h: NAV}
-  - {t: '$$mdi:keyboard-return$$', type: enter}
-  - {t: '$$mdi:keyboard-return$$', type: enter}
   - {t: '$$mdi:keyboard-return$$', h: SYM-C}
+  - {t: SYM-C, h: SYM-C}
+  - {t: '$$mdi:keyboard-return$$', type: enter}
   - $$mdi:keyboard-esc$$
+  - {t: '$$mdi:keyboard-space$$', h: NAV}
   - {t: '$$mdi:keyboard-tab$$', h: SYM-C}
   - $$mdi:apple-keyboard-option$$
   - $$mdi:backspace-reverse-outline$$
@@ -288,10 +288,10 @@ layers:
   - )
   - '|'
   - {t: '`', s: '~'}
+  - $$mdi:apple-keyboard-shift$$
   - $$mdi:apple-keyboard-control$$
   - $$mdi:apple-keyboard-option$$
   - LGUI
-  - $$mdi:apple-keyboard-shift$$
   - +
   - {t: '$$mdi:menu-left$$', s: '$$mdi:mouse$$'}
   - {t: '-', s: _}
@@ -317,10 +317,10 @@ layers:
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
-  - {t: '$$mdi:transfer$$', type: trans}
-  - {t: '$$mdi:transfer$$', type: trans}
-  - $$mdi:mouse-left-click-outline$$
   - {type: held}
+  - {type: held alternate}
+  - $$mdi:mouse-left-click-outline$$
+  - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {type: held alternate}
   - {t: '$$mdi:transfer$$', type: trans}
