@@ -28,9 +28,9 @@ layers:
   - P
   - {t: \, s: '|'}
   - {t: '$$mdi:backspace$$', type: backspace}
-  - {t: A, h: '$$mdi:apple-keyboard-shift$$'}
-  - {t: S, h: '$$mdi:apple-keyboard-control$$'}
-  - {t: D, h: '$$mdi:apple-keyboard-option$$'}
+  - {t: A, h: '$$mdi:apple-keyboard-control$$'}
+  - {t: S, h: '$$mdi:apple-keyboard-option$$'}
+  - {t: D, h: LGUI}
   - {t: F, h: '$$mdi:apple-keyboard-shift$$'}
   - {t: G, h: '$$mdi:keyboard-esc$$'}
   - $$mdi:arrow-left-bold$$
@@ -93,10 +93,10 @@ layers:
   - {t: '-', s: _}
   - F12
   - {t: '$$mdi:transfer$$', type: trans}
-  - $$mdi:apple-keyboard-shift$$
   - $$mdi:apple-keyboard-control$$
   - $$mdi:apple-keyboard-option$$
   - LGUI
+  - $$mdi:apple-keyboard-shift$$
   - '&mkp MB5'
   - {t: '$$mdi:menu-left$$', s: '$$mdi:mouse$$'}
   - HOME
@@ -158,10 +158,10 @@ layers:
   - )
   - {t: '-', s: _}
   - {t: '`', s: '~'}
-  - $$mdi:apple-keyboard-shift$$
   - $$mdi:apple-keyboard-control$$
   - $$mdi:apple-keyboard-option$$
   - LGUI
+  - $$mdi:apple-keyboard-shift$$
   - '"'
   - {t: '$$mdi:menu-left$$', s: '$$mdi:mouse$$'}
   - +
@@ -223,10 +223,10 @@ layers:
   - {t: ;, s: ':'}
   - {t: \, s: '|'}
   - {t: '$$mdi:backspace$$', type: backspace}
-  - {t: A, h: '$$mdi:apple-keyboard-shift$$'}
-  - {t: R, h: '$$mdi:apple-keyboard-control$$'}
-  - {t: S, h: '$$mdi:apple-keyboard-option$$'}
-  - {t: T, h: LGUI}
+  - {t: A, h: '$$mdi:apple-keyboard-control$$'}
+  - {t: R, h: '$$mdi:apple-keyboard-option$$'}
+  - {t: S, h: LGUI}
+  - {t: T, h: '$$mdi:apple-keyboard-shift$$'}
   - {t: G, h: '$$mdi:keyboard-esc$$'}
   - $$mdi:arrow-left-bold$$
   - {t: M, h: '$$mdi:arrow-up-bold$$'}
@@ -286,20 +286,20 @@ layers:
   - '*'
   - (
   - )
-  - '|'
+  - {t: '-', s: _}
   - {t: '`', s: '~'}
-  - $$mdi:apple-keyboard-shift$$
   - $$mdi:apple-keyboard-control$$
   - $$mdi:apple-keyboard-option$$
   - LGUI
-  - +
+  - $$mdi:apple-keyboard-shift$$
+  - '"'
   - {t: '$$mdi:menu-left$$', s: '$$mdi:mouse$$'}
-  - {t: '-', s: _}
+  - +
   - {t: '=', s: +}
   - '{'
   - '}'
   - ':'
-  - '"'
+  - _
   - {t: '$$mdi:transfer$$', type: trans}
   - _
   - <
