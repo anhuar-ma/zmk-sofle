@@ -14,14 +14,14 @@
  *   R: ENTER | ESC | SPACE/NAV | TAB/SYM | RALT | DEL
  *
  * Home-row mods / holds (BASE QWERTY):
- *   L (mods):   A=Shift  S=Ctrl  D=Alt  F=GUI (via hra)   G=ESC (hml)
+ *   L (mods):   A=Ctrl  S=Alt  D=GUI  F=Shift (via hra)   G=ESC (hml)
  *   R (arrows): H=UP     J=DOWN  K=LEFT  L=RIGHT  ;=RShift   (tap = letter, hold = arrow/mod)
  *
  * Home-row mods / holds (CMK Colemak-DH) — same pattern:
- *   L (mods):   A=Shift  R=Ctrl  S=Alt  T=GUI (via hra)   G=ESC (hml)
+ *   L (mods):   A=Ctrl  R=Alt  S=GUI  T=Shift (via hra)   G=ESC (hml)
  *   R (arrows): M=UP     N=DOWN  E=LEFT  I=RIGHT  O=RShift
  *
- * Combos (BASE and CMK layers):
+ * Combos (DISABLED — kept in source for easy re-enable):
  *   J+K       -> ESC
  *   M+,       -> TAB
  *   C+V       -> Caps Word
@@ -268,7 +268,7 @@
             bindings = <
 &kp ESC    &kp N1         &kp N2        &kp N3         &kp N4              &kp N5            &kp UP_ARROW      &kp N6              &kp N7         &kp N8        &kp N9         &kp N0            &mt CAPS BSPC
 &kp TAB    &kp Q          &kp W         &kp E          &kp R               &kp T             &kp DOWN_ARROW    &kp Y               &kp U          &kp I         &kp O          &kp P             &kp BSLH
-&kp BACKSPACE  &hml LSHFT A   &hml LCTRL S   &hml LALT D  &hra LSHFT F  &hml ESC G                     &kp LEFT_ARROW    &hra UP H          &hra DOWN J      &hra LEFT K   &hra RIGHT L    &hra RSHFT SEMI   &kp APOS
+&kp BACKSPACE  &hml LCTRL A   &hml LALT S   &hml LGUI D   &hra LSHFT F  &hml ESC G                     &kp LEFT_ARROW    &hra UP H          &hra DOWN J      &hra LEFT K   &hra RIGHT L    &hra RSHFT SEMI   &kp APOS
 &sk LSHFT  &kp Z          &kp X         &kp C          &kp V               &kp B             &kp RIGHT_ARROW   &kp N               &kp M          &kp COMMA     &kp DOT        &kp FSLH          &sk RSHFT
 &kp C_MUTE &kp LCTRL      &kp LGUI      &kp LALT       &kp_slh SYM ENTER &ltq SYM SYM      &kp ENTER             &kp ESC &kp_slh NAV SPACE        &lt_thumb SYM TAB  &kp RALT  &kp DEL
             >;
@@ -285,7 +285,7 @@
             bindings = <
 &trans     &kp F1      &kp F2      &kp F3      &kp F4      &kp F5          &mmv MOVE_UP     &kp F6      &kp F7     &kp F8     &kp F9     &kp F10     &kp F11
 &trans     &kp ESC     &mkp LCLK   &mkp MCLK   &mkp RCLK   &mkp MB4        &mmv MOVE_DOWN   &kp PG_UP   &kp N7     &kp N8     &kp N9     &kp MINUS   &kp F12
-&trans     &kp LSHFT   &kp LCTRL   &kp LALT    &kp LGUI    &mkp MB5        &mmv MOVE_LEFT   &kp HOME    &kp N4     &kp N5     &kp N6     &kp PLUS    &kp EQUAL
+&trans     &kp LCTRL   &kp LALT    &kp LGUI    &kp LSHFT   &mkp MB5        &mmv MOVE_LEFT   &kp HOME    &kp N4     &kp N5     &kp N6     &kp PLUS    &kp EQUAL
 &trans     &kp K_UNDO  &kp K_CUT   &kp K_COPY  &kp K_PASTE &kp K_REDO      &mmv MOVE_RIGHT  &kp END     &kp N1     &kp N2     &kp N3     &kp ASTRK   &trans
 &trans     &trans      &trans      &trans      &trans      &trans          &mkp LCLK        &kp N0      &kp DOT    &kp COMMA  &trans     &trans
             >;
@@ -303,7 +303,7 @@
             bindings = <
 &trans     &kp F1      &kp F2      &kp F3      &kp F4      &kp F5          &mmv MOVE_UP     &kp F6       &kp F7       &kp F8       &kp F9       &kp F10      &trans
 &kp TILDE  &kp EXCL    &kp AT      &kp HASH    &kp DLLR    &kp PRCNT       &mmv MOVE_DOWN   &kp CARET    &kp AMPS     &kp ASTRK    &kp LPAR     &kp RPAR     &kp MINUS 
-&kp GRAVE  &kp LSHFT   &kp LCTRL   &kp LALT    &kp LGUI    &kp DQT         &mmv MOVE_LEFT   &kp PLUS    &kp EQUAL    &kp LBRC     &kp RBRC     &kp COLON    &kp UNDER
+&kp GRAVE  &kp LCTRL   &kp LALT    &kp LGUI    &kp LSHFT   &kp DQT         &mmv MOVE_LEFT   &kp PLUS    &kp EQUAL    &kp LBRC     &kp RBRC     &kp COLON    &kp UNDER
 &trans     &kp UNDER   &kp LT      &to CMK     &kp GT      &kp BSLH        &mmv MOVE_RIGHT  &kp SLASH    &kp QMARK    &kp LBKT     &kp RBKT     &kp SEMI     &trans
 &trans     &trans      &trans      &trans      &trans      &trans          &mkp LCLK        &trans       &trans       &trans       &trans       &trans
             >;
@@ -312,7 +312,7 @@
 
         /* ==================================================================
          * LAYER 3 — Colemak-DH + HRM
-         *   QWFPB JLUY;        HRM: A=Shift R=Ctrl S=Alt T=GUI (hra)
+         *   QWFPB JLUY;        HRM: A=Ctrl R=Alt S=GUI T=Shift (hra)
          *   ARSTG MNEIO             M=UP N=DOWN E=LEFT I=RIGHT O=RShift (all hra)
          *   ZXCDV KH,./             G=ESC (hml hold = sticky ESC)
          *   Thumb cluster identical to BASE so muscle memory carries.
@@ -323,7 +323,7 @@
             bindings = <
 &kp ESC        &kp N1         &kp N2         &kp N3        &kp N4              &kp N5            &kp UP_ARROW      &kp N6              &kp N7         &kp N8        &kp N9         &kp N0            &mt CAPS BSPC
 &kp TAB        &kp Q          &kp W          &kp F         &kp P               &kp B             &kp DOWN_ARROW    &kp J               &kp L          &kp U         &kp Y          &kp SEMI          &kp BSLH
-&kp BACKSPACE  &hml LSHFT A   &hml LCTRL R   &hml LALT S   &hra LGUI T         &hml ESC G        &kp LEFT_ARROW    &hra UP M           &hra DOWN N    &hra LEFT E   &hra RIGHT I   &hra RSHFT O      &kp APOS
+&kp BACKSPACE  &hml LCTRL A   &hml LALT R   &hml LGUI S   &hra LSHFT T         &hml ESC G        &kp LEFT_ARROW    &hra UP M           &hra DOWN N    &hra LEFT E   &hra RIGHT I   &hra RSHFT O      &kp APOS
 &sk LSHFT      &kp Z          &kp X          &kp C         &kp D               &kp V             &kp RIGHT_ARROW   &kp K               &kp H          &kp COMMA     &kp DOT        &kp FSLH          &sk RSHFT
 &kp C_MUTE     &kp LCTRL      &kp LGUI       &kp LALT      &kp_slh SYMC ENTER  &ltq SYMC SYMC    &kp ENTER         &kp ESC   &kp_slh NAV SPACE        &lt_thumb SYMC TAB  &kp RALT  &kp DEL
             >;
@@ -339,8 +339,8 @@
             display-name = "SYM-C";
             bindings = <
 &trans     &kp F1      &kp F2      &kp F3      &kp F4      &kp F5          &mmv MOVE_UP     &kp F6       &kp F7       &kp F8       &kp F9       &kp F10      &trans
-&kp TILDE  &kp EXCL    &kp AT      &kp HASH    &kp DLLR    &kp PRCNT       &mmv MOVE_DOWN   &kp CARET    &kp AMPS     &kp ASTRK    &kp LPAR     &kp RPAR     &kp PIPE
-&kp GRAVE  &kp LSHFT   &kp LCTRL   &kp LALT    &kp LGUI    &kp PLUS        &mmv MOVE_LEFT   &kp MINUS    &kp EQUAL    &kp LBRC     &kp RBRC     &kp COLON    &kp DQT
+&kp TILDE  &kp EXCL    &kp AT      &kp HASH    &kp DLLR    &kp PRCNT       &mmv MOVE_DOWN   &kp CARET    &kp AMPS     &kp ASTRK    &kp LPAR     &kp RPAR     &kp MINUS
+&kp GRAVE  &kp LCTRL   &kp LALT    &kp LGUI    &kp LSHFT   &kp DQT         &mmv MOVE_LEFT   &kp PLUS     &kp EQUAL    &kp LBRC     &kp RBRC     &kp COLON    &kp UNDER
 &trans     &kp UNDER   &kp LT      &to BASE    &kp GT      &kp BSLH        &mmv MOVE_RIGHT  &kp SLASH    &kp QMARK    &kp LBKT     &kp RBKT     &kp SEMI     &trans
 &trans     &trans      &trans      &trans      &trans      &trans          &mkp LCLK        &trans       &trans       &trans       &trans       &trans
             >;
