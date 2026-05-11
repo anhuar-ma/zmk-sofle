@@ -17,38 +17,38 @@ layers:
   - $$mdi:keyboard-tab$$
   - Q
   - W
-  - E
-  - R
-  - T
-  - $$mdi:arrow-down-bold$$
-  - Y
-  - U
-  - I
-  - O
+  - F
   - P
+  - B
+  - $$mdi:arrow-down-bold$$
+  - J
+  - L
+  - U
+  - Y
+  - {t: ;, s: ':'}
   - {t: \, s: '|'}
   - {t: '$$mdi:backspace$$', type: backspace}
   - {t: A, h: '$$mdi:apple-keyboard-control$$'}
-  - {t: S, h: '$$mdi:apple-keyboard-option$$'}
-  - {t: D, h: LGUI}
-  - {t: F, h: '$$mdi:apple-keyboard-shift$$'}
+  - {t: R, h: '$$mdi:apple-keyboard-option$$'}
+  - {t: S, h: LGUI}
+  - {t: T, h: '$$mdi:apple-keyboard-shift$$'}
   - {t: G, h: '$$mdi:keyboard-esc$$'}
   - $$mdi:arrow-left-bold$$
-  - {t: H, h: '$$mdi:arrow-up-bold$$'}
-  - {t: J, h: '$$mdi:arrow-down-bold$$'}
-  - {t: K, h: '$$mdi:arrow-left-bold$$'}
-  - {t: L, h: '$$mdi:arrow-right-bold$$'}
-  - {t: ;, h: '$$mdi:apple-keyboard-shift$$', s: ':'}
+  - {t: M, h: '$$mdi:arrow-up-bold$$'}
+  - {t: N, h: '$$mdi:arrow-down-bold$$'}
+  - {t: E, h: '$$mdi:arrow-left-bold$$'}
+  - {t: I, h: '$$mdi:arrow-right-bold$$'}
+  - {t: O, h: '$$mdi:apple-keyboard-shift$$'}
   - {t: '''', s: '"'}
   - {t: '$$mdi:apple-keyboard-shift$$', h: '$$mdi:gesture-tap-hold$$'}
   - Z
   - X
   - C
+  - D
   - V
-  - B
   - $$mdi:arrow-right-bold$$
-  - N
-  - M
+  - K
+  - H
   - {t: ',', s: <}
   - {t: ., s: '>'}
   - {t: /, s: '?'}
@@ -156,7 +156,7 @@ layers:
   - '*'
   - (
   - )
-  - {t: '-', s: _}
+  - ':'
   - {t: '`', s: '~'}
   - $$mdi:apple-keyboard-control$$
   - $$mdi:apple-keyboard-option$$
@@ -168,12 +168,12 @@ layers:
   - {t: '=', s: +}
   - '{'
   - '}'
-  - ':'
-  - _
+  - {t: '-', s: _}
+  - {t: ;, s: ':'}
   - {t: '$$mdi:transfer$$', type: trans}
   - _
   - <
-  - {t: CMK-DH, h: toggle}
+  - {t: QWERTY, h: toggle}
   - '>'
   - {t: \, s: '|'}
   - {t: '$$mdi:menu-right$$', s: '$$mdi:mouse$$'}
@@ -181,7 +181,7 @@ layers:
   - '?'
   - {t: '[', s: '{'}
   - {t: ']', s: '}'}
-  - {t: ;, s: ':'}
+  - _
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
@@ -195,7 +195,7 @@ layers:
   - {type: held alternate}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
-  CMK-DH:
+  QWERTY:
   - $$mdi:keyboard-esc$$
   - {t: '1', s: '!'}
   - {t: '2', s: '@'}
@@ -212,38 +212,38 @@ layers:
   - $$mdi:keyboard-tab$$
   - Q
   - W
-  - F
-  - P
-  - B
+  - E
+  - R
+  - T
   - $$mdi:arrow-down-bold$$
-  - J
-  - L
-  - U
   - Y
-  - {t: ;, s: ':'}
+  - U
+  - I
+  - O
+  - P
   - {t: \, s: '|'}
   - {t: '$$mdi:backspace$$', type: backspace}
   - {t: A, h: '$$mdi:apple-keyboard-control$$'}
-  - {t: R, h: '$$mdi:apple-keyboard-option$$'}
-  - {t: S, h: LGUI}
-  - {t: T, h: '$$mdi:apple-keyboard-shift$$'}
+  - {t: S, h: '$$mdi:apple-keyboard-option$$'}
+  - {t: D, h: LGUI}
+  - {t: F, h: '$$mdi:apple-keyboard-shift$$'}
   - {t: G, h: '$$mdi:keyboard-esc$$'}
   - $$mdi:arrow-left-bold$$
-  - {t: M, h: '$$mdi:arrow-up-bold$$'}
-  - {t: N, h: '$$mdi:arrow-down-bold$$'}
-  - {t: E, h: '$$mdi:arrow-left-bold$$'}
-  - {t: I, h: '$$mdi:arrow-right-bold$$'}
-  - {t: O, h: '$$mdi:apple-keyboard-shift$$'}
+  - {t: H, h: '$$mdi:arrow-up-bold$$'}
+  - {t: J, h: '$$mdi:arrow-down-bold$$'}
+  - {t: K, h: '$$mdi:arrow-left-bold$$'}
+  - {t: L, h: '$$mdi:arrow-right-bold$$'}
+  - {t: ;, h: '$$mdi:apple-keyboard-shift$$', s: ':'}
   - {t: '''', s: '"'}
   - {t: '$$mdi:apple-keyboard-shift$$', h: '$$mdi:gesture-tap-hold$$'}
   - Z
   - X
   - C
-  - D
   - V
+  - B
   - $$mdi:arrow-right-bold$$
-  - K
-  - H
+  - N
+  - M
   - {t: ',', s: <}
   - {t: ., s: '>'}
   - {t: /, s: '?'}
@@ -286,7 +286,7 @@ layers:
   - '*'
   - (
   - )
-  - {t: '-', s: _}
+  - ':'
   - {t: '`', s: '~'}
   - $$mdi:apple-keyboard-control$$
   - $$mdi:apple-keyboard-option$$
@@ -298,8 +298,8 @@ layers:
   - {t: '=', s: +}
   - '{'
   - '}'
-  - ':'
-  - _
+  - {t: '-', s: _}
+  - {t: ;, s: ':'}
   - {t: '$$mdi:transfer$$', type: trans}
   - _
   - <
@@ -311,7 +311,7 @@ layers:
   - '?'
   - {t: '[', s: '{'}
   - {t: ']', s: '}'}
-  - {t: ;, s: ':'}
+  - _
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '$$mdi:transfer$$', type: trans}
