@@ -2,24 +2,24 @@
  * Eyelash Sofle — ZMK keymap
  *
  * Layers:
- *   0 = BASE   QWERTY + home-row mods on both hands
+ *   0 = BASE   Colemak-DH + home-row mods on both hands
  *   1 = NAV    Navigation / numpad / mouse buttons   (hold L-thumb SPACE)
  *   2 = SYM    Symbols                               (hold R-thumb BSPC or TAB)
- *   3 = CMK    Colemak-DH + HRM                      (toggle in via SYM + C)
- *   4 = SYMC   SYM while on Colemak (C -> back to BASE)
+ *   3 = CMK    QWERTY                                (toggle in via SYM + C)
+ *   4 = SYMC   SYM while on QWERTY (C -> back to BASE)
  *   5 = FN     Function / media / BT / RGB / system  (tri-layer NAV+SYM)
  *
  * Thumb cluster (outer -> inner, 6 per side):
  *   L: MUTE | CTRL | GUI | ALT | ENTER/SYM | SYM (mo/sticky)
  *   R: ENTER | ESC | SPACE/NAV | TAB/SYM | RALT | DEL
  *
- * Home-row mods / holds (BASE QWERTY):
- *   L (mods):   A=Ctrl  S=Alt  D=GUI  F=Shift (via hra)   G=ESC (hml)
- *   R (arrows): H=UP     J=DOWN  K=LEFT  L=RIGHT  ;=RShift   (tap = letter, hold = arrow/mod)
+ * Home-row mods / holds (BASE Colemak-DH):
+ *   L (mods):   A=Ctrl  R=Alt  S=GUI  T=Shift (hml)   G=ESC (hla)
+ *   R (arrows): M=UP     N=DOWN  E=LEFT  I=RIGHT  O=RShift   (tap = letter, hold = arrow/mod)
  *
- * Home-row mods / holds (CMK Colemak-DH) — same pattern:
- *   L (mods):   A=Ctrl  R=Alt  S=GUI  T=Shift (via hra)   G=ESC (hml)
- *   R (arrows): M=UP     N=DOWN  E=LEFT  I=RIGHT  O=RShift
+ * Home-row mods / holds (CMK QWERTY) — same pattern:
+ *   L (mods):   A=Ctrl  S=Alt  D=GUI  F=Shift (hml)   G=ESC (hla)
+ *   R (arrows): H=UP     J=DOWN  K=LEFT  L=RIGHT  ;=RShift
  *
  * Combos (DISABLED — kept in source for easy re-enable):
  *   J+K       -> ESC
@@ -40,7 +40,8 @@
 #include <dt-bindings/zmk/pointing.h>
 #include <dt-bindings/zmk/rgb.h>
 
-/* Layer aliases (must match declaration order in keymap { } below). */
+/* Layer aliases (must match declaration order in keymap { } below).
+ * Note: CMK/SYMC names are kept for compatibility but layer 3 is now QWERTY. */
 #define BASE 0
 #define NAV  1
 #define SYM  2
@@ -282,16 +283,16 @@
         compatible = "zmk,keymap";
 
         /* ==================================================================
-         * LAYER 0 — BASE (QWERTY)
+         * LAYER 0 — BASE (Colemak-DH)
          * ================================================================== */
         base_layer {
             display-name = "BASE";
             bindings = <
-&kp ESC    &kp N1         &kp N2        &kp N3         &kp N4              &kp N5            &kp UP_ARROW      &kp N6              &kp N7         &kp N8        &kp N9         &kp N0            &mt CAPS BSPC
-&kp TAB    &kp Q          &kp W         &kp E          &kp R               &kp T             &kp DOWN_ARROW    &kp Y               &kp U          &kp I         &kp O          &kp P             &kp BSLH
-&kp BACKSPACE  &hml LCTRL A   &hml LALT S   &hml LGUI D   &hml LSHFT F  &hla ESC G                     &kp LEFT_ARROW    &hra UP H          &hra DOWN J      &hra LEFT K   &hra RIGHT L    &hmr RSHFT SEMI   &kp APOS
-&sk LSHFT  &kp Z          &kp X         &kp C          &kp V               &kp B             &kp RIGHT_ARROW   &kp N               &kp M          &kp COMMA     &kp DOT        &kp FSLH          &sk RSHFT
-&kp C_MUTE &kp LCTRL      &kp LGUI      &kp LALT       &kp_slh SYM ENTER &ltq SYM SYM      &kp ENTER             &kp ESC &kp_slh NAV SPACE        &lt_thumb SYM TAB  &kp RALT  &kp DEL
+&kp ESC        &kp N1         &kp N2         &kp N3        &kp N4              &kp N5            &kp UP_ARROW      &kp N6              &kp N7         &kp N8        &kp N9         &kp N0            &mt CAPS BSPC
+&kp TAB        &kp Q          &kp W          &kp F         &kp P               &kp B             &kp DOWN_ARROW    &kp J               &kp L          &kp U         &kp Y          &kp SEMI          &kp BSLH
+&kp BACKSPACE  &hml LCTRL A   &hml LALT R   &hml LGUI S   &hml LSHFT T         &hla ESC G        &kp LEFT_ARROW    &hra UP M           &hra DOWN N    &hra LEFT E   &hra RIGHT I   &hmr RSHFT O      &kp APOS
+&sk LSHFT      &kp Z          &kp X          &kp C         &kp D               &kp V             &kp RIGHT_ARROW   &kp K               &kp H          &kp COMMA     &kp DOT        &kp FSLH          &sk RSHFT
+&kp C_MUTE     &kp LCTRL      &kp LGUI       &kp LALT      &kp_slh SYM ENTER   &ltq SYM SYM      &kp ENTER         &kp ESC   &kp_slh NAV SPACE        &lt_thumb SYM TAB  &kp RALT  &kp DEL
             >;
             sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOL_DN>;
         };
@@ -317,52 +318,48 @@
          * LAYER 2 — SYM
          *   Right hand holds the heavy symbol content.
          *   Left-hand home row mirrors mods so Shift/Ctrl+symbol chords work.
-         *   Position 42 (left hand `C`) -> `&to CMK` toggles Colemak on.
+         *   Position 42 (left hand `C`) -> `&to CMK` toggles to QWERTY.
          * ================================================================== */
         sym_layer {
             display-name = "SYM";
             bindings = <
 &trans     &kp F1      &kp F2      &kp F3      &kp F4      &kp F5          &mmv MOVE_UP     &kp F6       &kp F7       &kp F8       &kp F9       &kp F10      &trans
-&kp TILDE  &kp EXCL    &kp AT      &kp HASH    &kp DLLR    &kp PRCNT       &mmv MOVE_DOWN   &kp CARET    &kp AMPS     &kp ASTRK    &kp LPAR     &kp RPAR     &kp MINUS 
-&kp GRAVE  &kp LCTRL   &kp LALT    &kp LGUI    &kp LSHFT   &kp DQT         &mmv MOVE_LEFT   &kp PLUS    &kp EQUAL    &kp LBRC     &kp RBRC     &kp COLON    &kp UNDER
-&trans     &kp UNDER   &kp LT      &to CMK     &kp GT      &kp BSLH        &mmv MOVE_RIGHT  &kp SLASH    &kp QMARK    &kp LBKT     &kp RBKT     &kp SEMI     &trans
+&kp TILDE  &kp EXCL    &kp AT      &kp HASH    &kp DLLR    &kp PRCNT       &mmv MOVE_DOWN   &kp CARET    &kp AMPS     &kp ASTRK    &kp LPAR     &kp RPAR     &kp COLON 
+&kp GRAVE  &kp LCTRL   &kp LALT    &kp LGUI    &kp LSHFT   &kp DQT         &mmv MOVE_LEFT   &kp PLUS    &kp EQUAL    &kp LBRC     &kp RBRC     &kp MINUS    &kp SEMI
+&trans     &kp UNDER   &kp LT      &to CMK     &kp GT      &kp BSLH        &mmv MOVE_RIGHT  &kp SLASH    &kp QMARK    &kp LBKT     &kp RBKT     &kp UNDER    &trans
 &trans     &trans      &trans      &trans      &trans      &trans          &mkp LCLK        &trans       &trans       &trans       &trans       &trans
             >;
             sensor-bindings = <&scroll_encoder>;
         };
 
         /* ==================================================================
-         * LAYER 3 — Colemak-DH + HRM
-         *   QWFPB JLUY;        HRM: A=Ctrl R=Alt S=GUI T=Shift (hra)
-         *   ARSTG MNEIO             M=UP N=DOWN E=LEFT I=RIGHT O=RShift (all hra)
-         *   ZXCDV KH,./             G=ESC (hml hold = sticky ESC)
-         *   Thumb cluster identical to BASE so muscle memory carries.
-         *   SYM on this layer is SYMC (layer 4) so that `C` returns to BASE.
+         * LAYER 3 — QWERTY (toggle via SYM + C)
+         *   Thumb cluster uses SYMC so that `C` returns to BASE (Colemak-DH).
          * ================================================================== */
-        colemak_layer {
-            display-name = "CMK-DH";
+        qwerty_layer {
+            display-name = "QWERTY";
             bindings = <
-&kp ESC        &kp N1         &kp N2         &kp N3        &kp N4              &kp N5            &kp UP_ARROW      &kp N6              &kp N7         &kp N8        &kp N9         &kp N0            &mt CAPS BSPC
-&kp TAB        &kp Q          &kp W          &kp F         &kp P               &kp B             &kp DOWN_ARROW    &kp J               &kp L          &kp U         &kp Y          &kp SEMI          &kp BSLH
-&kp BACKSPACE  &hml LCTRL A   &hml LALT R   &hml LGUI S   &hml LSHFT T         &hla ESC G        &kp LEFT_ARROW    &hra UP M           &hra DOWN N    &hra LEFT E   &hra RIGHT I   &hmr RSHFT O      &kp APOS
-&sk LSHFT      &kp Z          &kp X          &kp C         &kp D               &kp V             &kp RIGHT_ARROW   &kp K               &kp H          &kp COMMA     &kp DOT        &kp FSLH          &sk RSHFT
-&kp C_MUTE     &kp LCTRL      &kp LGUI       &kp LALT      &kp_slh SYMC ENTER  &ltq SYMC SYMC    &kp ENTER         &kp ESC   &kp_slh NAV SPACE        &lt_thumb SYMC TAB  &kp RALT  &kp DEL
+&kp ESC    &kp N1         &kp N2        &kp N3         &kp N4              &kp N5            &kp UP_ARROW      &kp N6              &kp N7         &kp N8        &kp N9         &kp N0            &mt CAPS BSPC
+&kp TAB    &kp Q          &kp W         &kp E          &kp R               &kp T             &kp DOWN_ARROW    &kp Y               &kp U          &kp I         &kp O          &kp P             &kp BSLH
+&kp BACKSPACE  &hml LCTRL A   &hml LALT S   &hml LGUI D   &hml LSHFT F  &hla ESC G        &kp LEFT_ARROW    &hra UP H          &hra DOWN J      &hra LEFT K   &hra RIGHT L    &hmr RSHFT SEMI   &kp APOS
+&sk LSHFT  &kp Z          &kp X         &kp C          &kp V               &kp B             &kp RIGHT_ARROW   &kp N               &kp M          &kp COMMA     &kp DOT        &kp FSLH          &sk RSHFT
+&kp C_MUTE &kp LCTRL      &kp LGUI      &kp LALT       &kp_slh SYMC ENTER  &ltq SYMC SYMC    &kp ENTER         &kp ESC   &kp_slh NAV SPACE        &lt_thumb SYMC TAB  &kp RALT  &kp DEL
             >;
             sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOL_DN>;
         };
 
         /* ==================================================================
-         * LAYER 4 — SYMC (SYM while in Colemak)
+         * LAYER 4 — SYMC (SYM while in QWERTY)
          *   Identical to SYM, but the "C" slot at position 42 sends `&to BASE`
-         *   to flip back to QWERTY.
+         *   to flip back to Colemak-DH.
          * ================================================================== */
         sym_cmk_layer {
             display-name = "SYM-C";
             bindings = <
 &trans     &kp F1      &kp F2      &kp F3      &kp F4      &kp F5          &mmv MOVE_UP     &kp F6       &kp F7       &kp F8       &kp F9       &kp F10      &trans
-&kp TILDE  &kp EXCL    &kp AT      &kp HASH    &kp DLLR    &kp PRCNT       &mmv MOVE_DOWN   &kp CARET    &kp AMPS     &kp ASTRK    &kp LPAR     &kp RPAR     &kp MINUS
-&kp GRAVE  &kp LCTRL   &kp LALT    &kp LGUI    &kp LSHFT   &kp DQT         &mmv MOVE_LEFT   &kp PLUS     &kp EQUAL    &kp LBRC     &kp RBRC     &kp COLON    &kp UNDER
-&trans     &kp UNDER   &kp LT      &to BASE    &kp GT      &kp BSLH        &mmv MOVE_RIGHT  &kp SLASH    &kp QMARK    &kp LBKT     &kp RBKT     &kp SEMI     &trans
+&kp TILDE  &kp EXCL    &kp AT      &kp HASH    &kp DLLR    &kp PRCNT       &mmv MOVE_DOWN   &kp CARET    &kp AMPS     &kp ASTRK    &kp LPAR     &kp RPAR     &kp COLON
+&kp GRAVE  &kp LCTRL   &kp LALT    &kp LGUI    &kp LSHFT   &kp DQT         &mmv MOVE_LEFT   &kp PLUS     &kp EQUAL    &kp LBRC     &kp RBRC     &kp MINUS    &kp SEMI
+&trans     &kp UNDER   &kp LT      &to BASE    &kp GT      &kp BSLH        &mmv MOVE_RIGHT  &kp SLASH    &kp QMARK    &kp LBKT     &kp RBKT     &kp UNDER    &trans
 &trans     &trans      &trans      &trans      &trans      &trans          &mkp LCLK        &trans       &trans       &trans       &trans       &trans
             >;
             sensor-bindings = <&scroll_encoder>;
