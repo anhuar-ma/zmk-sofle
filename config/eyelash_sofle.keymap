@@ -14,11 +14,11 @@
  *   R: ENTER | ESC | SPACE/NAV | TAB/SYM | RALT | DEL
  *
  * Home-row mods / holds (BASE Colemak-DH):
- *   L (mods):   A=Ctrl  R=Alt  S=GUI  T=Shift (hml)   G=ESC (hla)
+ *   L (mods):   A=Ctrl  R=Alt  S=GUI  T=Shift (hsl)   G=ESC (hla)
  *   R (arrows): M=UP     N=DOWN  E=LEFT  I=RIGHT  O=RShift   (tap = letter, hold = arrow/mod)
  *
  * Home-row mods / holds (CMK QWERTY) — same pattern:
- *   L (mods):   A=Ctrl  S=Alt  D=GUI  F=Shift (hml)   G=ESC (hla)
+ *   L (mods):   A=Ctrl  S=Alt  D=GUI  F=Shift (hsl)   G=ESC (hla)
  *   R (arrows): H=UP     J=DOWN  K=LEFT  L=RIGHT  ;=RShift
  *
  * Combos (DISABLED — kept in source for easy re-enable):
@@ -72,6 +72,10 @@
 /* Caps-word continuation: let it survive common word separators. */
 &caps_word { continue-list = <UNDERSCORE MINUS BACKSPACE DELETE>; };
 
+/* Sticky keys ignore other modifiers — allows sequential sticky stacking
+ * (e.g. hold A=Ctrl, release, hold R=Alt, release, tap key → Ctrl+Alt+key). */
+&sk { ignore-modifiers; };
+
 / {
     /* Tri-layer: holding NAV and SYM simultaneously activates FN. */
     conditional_layers {
@@ -90,15 +94,16 @@
     };
 
     behaviors {
-        /* Home-row mods (left hand).
+        /* Home-row mods (left hand) — Ctrl / Alt / GUI only (A / R / S).
          *
-         *   Tap  = letter (A / S / D / F)
-         *   Hold + other key + release  = Ctrl/Alt/GUI/Shift + that key
+         *   Tap  = letter
+         *   Hold + other key + release  = Ctrl/Alt/GUI + that key
          *   Hold + release alone        = sticky mod for the NEXT keypress only
-         *                                 (one-shot, auto-releases after)
          *
          * - balanced flavor is forgiving for fast typists
          * - require-prior-idle-ms prevents mods after rolling letters
+         *   (kept strict at 150 — you press these deliberately, with a pause;
+         *    SHIFT is split onto `hsl` below so fast-typing holds still register)
          * - hold-trigger-key-positions = only the OTHER hand
          * - hold-trigger-on-release keeps rolls from accidentally modding
          */
@@ -117,19 +122,54 @@
                 32 33 34 35 36 37 38
                 45 46 47 48 49 50 51
                 58 59 60 61 62 63
-                /* Other left-hand HRM keys — A+S+D+F can chord together */
+                /* Other left-hand HRM keys — A+R+S+T can chord together */
                 27 28 29 30
             >;
             hold-trigger-on-release;
         };
 
+        /* Left-hand SHIFT (T on Colemak, F on QWERTY) — same as hml but tuned
+         * so a deliberate long-press registers even in the middle of a fast
+         * burst. require-prior-idle-ms is removed (0) because Shift is the one
+         * mod you fire mid-word to capitalize, so it must NOT be force-resolved
+         * to a tap just because you pressed a key <150ms earlier.
+         *
+         * Roll protection is still provided by the opposite-hand positional
+         * guard + hold-trigger-on-release (same-hand rolls won't shift).
+         * If you ever get accidental capitals on fast opposite-hand rolls,
+         * raise require-prior-idle-ms here to ~50.
+         */
+        hsl: home_shift_left {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <220>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <0>;
+            bindings = <&sk>, <&kp>;
+            hold-trigger-key-positions = <
+                /* Full right hand */
+                6  7  8  9  10 11 12
+                19 20 21 22 23 24 25
+                32 33 34 35 36 37 38
+                45 46 47 48 49 50 51
+                58 59 60 61 62 63
+                /* Other left-hand HRM keys — can chord together */
+                27 28 29 30
+            >;
+            hold-trigger-on-release;
+        };
+
+        /* Right-hand SHIFT (O on Colemak, ; on QWERTY).
+         * This behavior is used ONLY for right-shift, so require-prior-idle-ms
+         * is set to 0 here directly (same reasoning as hsl above). */
         hmr: home_row_mod_right {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             flavor = "balanced";
             tapping-term-ms = <220>;
             quick-tap-ms = <175>;
-            require-prior-idle-ms = <150>;
+            require-prior-idle-ms = <0>;
             bindings = <&sk>, <&kp>;
             hold-trigger-key-positions = <
                 0  1  2  3  4  5
@@ -167,6 +207,8 @@
 
         /* Left-hand hold-arrow: same as hra but triggers on RIGHT hand.
          * Used for G=ESC (left inner column, needs right-hand pairing).
+         * Used ONLY by G, so require-prior-idle-ms is set to 0 directly so a
+         * long-press reliably yields Esc during fast typing.
          */
         hla: home_left_arrow {
             compatible = "zmk,behavior-hold-tap";
@@ -174,7 +216,7 @@
             flavor = "balanced";
             tapping-term-ms = <200>;
             quick-tap-ms = <175>;
-            require-prior-idle-ms = <150>;
+            require-prior-idle-ms = <0>;
             bindings = <&kp>, <&kp>;
             hold-trigger-key-positions = <
                 6  7  8  9  10 11 12
@@ -290,7 +332,7 @@
             bindings = <
 &kp ESC        &kp N1         &kp N2         &kp N3        &kp N4              &kp N5            &kp UP_ARROW      &kp N6              &kp N7         &kp N8        &kp N9         &kp N0            &mt CAPS BSPC
 &kp TAB        &kp Q          &kp W          &kp F         &kp P               &kp B             &kp DOWN_ARROW    &kp J               &kp L          &kp U         &kp Y          &kp SEMI          &kp BSLH
-&kp BACKSPACE  &hml LCTRL A   &hml LALT R   &hml LGUI S   &hml LSHFT T         &hla ESC G        &kp LEFT_ARROW    &hra UP M           &hra DOWN N    &hra LEFT E   &hra RIGHT I   &hmr RSHFT O      &kp APOS
+&kp BACKSPACE  &hml LCTRL A   &hml LALT R   &hml LGUI S   &hsl LSHFT T         &hla ESC G        &kp LEFT_ARROW    &hra UP M           &hra DOWN N    &hra LEFT E   &hra RIGHT I   &hmr RSHFT O      &kp APOS
 &sk LSHFT      &kp X          &kp C          &kp D         &kp V               &kp Z             &kp RIGHT_ARROW   &kp K               &kp H          &kp COMMA     &kp DOT        &kp FSLH          &sk RSHFT
 &kp C_MUTE     &kp LCTRL      &kp LGUI       &kp LALT      &kp_slh SYM ENTER   &ltq SYM SYM      &kp ENTER         &kp ESC   &kp_slh NAV SPACE        &lt_thumb SYM TAB  &kp RALT  &kp DEL
             >;
@@ -341,7 +383,7 @@
             bindings = <
 &kp ESC    &kp N1         &kp N2        &kp N3         &kp N4              &kp N5            &kp UP_ARROW      &kp N6              &kp N7         &kp N8        &kp N9         &kp N0            &mt CAPS BSPC
 &kp TAB    &kp Q          &kp W         &kp E          &kp R               &kp T             &kp DOWN_ARROW    &kp Y               &kp U          &kp I         &kp O          &kp P             &kp BSLH
-&kp BACKSPACE  &hml LCTRL A   &hml LALT S   &hml LGUI D   &hml LSHFT F  &hla ESC G        &kp LEFT_ARROW    &hra UP H          &hra DOWN J      &hra LEFT K   &hra RIGHT L    &hmr RSHFT SEMI   &kp APOS
+&kp BACKSPACE  &hml LCTRL A   &hml LALT S   &hml LGUI D   &hsl LSHFT F  &hla ESC G        &kp LEFT_ARROW    &hra UP H          &hra DOWN J      &hra LEFT K   &hra RIGHT L    &hmr RSHFT SEMI   &kp APOS
 &sk LSHFT  &kp Z          &kp X         &kp C          &kp V               &kp B             &kp RIGHT_ARROW   &kp N               &kp M          &kp COMMA     &kp DOT        &kp FSLH          &sk RSHFT
 &kp C_MUTE &kp LCTRL      &kp LGUI      &kp LALT       &kp_slh SYMC ENTER  &ltq SYMC SYMC    &kp ENTER         &kp ESC   &kp_slh NAV SPACE        &lt_thumb SYMC TAB  &kp RALT  &kp DEL
             >;
