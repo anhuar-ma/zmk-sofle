@@ -1,25 +1,26 @@
 /*
- * Eyelash Sofle — ZMK keymap
+ * Eyelash Sofle — ZMK keymap (synchronized with kanata.kbd)
  *
  * Layers:
- *   0 = BASE    Colemak-DH + home-row mods on both hands
- *   1 = NAV     Navigation / numpad / mouse buttons   (hold L-thumb SPACE)
- *   2 = SYM     Symbols (+ pos 42 toggles QWERTY)      (hold R-thumb BSPC or TAB)
- *   3 = QWERTY  QWERTY alpha layer                     (toggle via SYM, pos 42)
- *   4 = FN      Function / media / BT / RGB / system   (tri-layer NAV+SYM)
- *   5 = EXT     Extended / special keys                (toggle via FN, &to EXT)
+ *   0 = BASE    Colemak-DH + HRMs + top-row hold-arrows
+ *   1 = NAV     Navigation / numpad / clipboard shortcuts
+ *   2 = SYM     Symbols (+ pos 0 toggles QWERTY)
+ *   3 = QWERTY  QWERTY alpha layer (toggle via SYM, pos 0)
+ *   4 = FN      Function / media / BT / RGB / system (tri-layer NAV+SYM)
+ *   5 = EXT     Extended / special keys (toggle via FN, &to EXT)
  *
  * Thumb cluster (outer -> inner, 6 per side):
- *   L: MUTE | CTRL | GUI | ALT | ENTER/SYM | SYM (mo/sticky)
+ *   L: MUTE | CTRL | GUI | ALT | ENTER/SYM | NAV (mo/sticky)
  *   R: ENTER | ESC | SPACE/NAV | TAB/SYM | RALT | DEL
  *
- * Home-row mods / holds (BASE Colemak-DH):
+ * Home-row & top-row holds (BASE Colemak-DH):
  *   L (mods):   A=Ctrl  R=Alt  S=GUI  T=Shift (hsl)   G=ESC (hla)
- *   R (arrows): M=UP     N=DOWN  E=LEFT  I=RIGHT  O=RShift   (tap = letter, hold = arrow/mod)
+ *   R (arrows): L=UP    U=DOWN  Y=LEFT  ;=RIGHT (top row)
+ *   R (mods):   M=ESC   N=Shift (hsr)  E=GUI (hmr)  I=Alt (hmr)  O=Ctrl (hmr) (home row)
  *
- * Home-row mods / holds (CMK QWERTY) — same pattern:
+ * Home-row holds (QWERTY):
  *   L (mods):   A=Ctrl  S=Alt  D=GUI  F=Shift (hsl)   G=ESC (hla)
- *   R (arrows): H=UP     J=DOWN  K=LEFT  L=RIGHT  ;=RShift
+ *   R (arrows): H=UP    J=DOWN  K=LEFT  L=RIGHT  ;=Shift (hsr)
  *
  * Combos (DISABLED — kept in source for easy re-enable):
  *   J+K       -> ESC
@@ -171,10 +172,30 @@
             hold-trigger-on-release;
         };
 
-        /* Right-hand SHIFT (O on Colemak, ; on QWERTY).
-         * This behavior is used ONLY for right-shift, so require-prior-idle-ms
-         * is set to 0 here directly (same reasoning as hsl above). */
+        /* Right-hand mods (E=GUI, I=Alt, O=Ctrl on Colemak). */
         hmr: home_row_mod_right {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <220>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
+            bindings = <&sk>, <&kp>;
+            hold-trigger-key-positions = <
+                0  1  2  3  4  5
+                13 14 15 16 17 18
+                26 27 28 29 30 31
+                39 40 41 42 43 44
+                52 53 54 55 56 57
+                /* Other right-hand HRM keys — can chord together */
+                34 35 36 37
+            >;
+            hold-trigger-on-release;
+        };
+
+        /* Right-hand SHIFT (N on Colemak, ; on QWERTY).
+         * require-prior-idle-ms is 0 so fast capitalizations work mid-burst. */
+        hsr: home_shift_right {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             flavor = "balanced";
@@ -188,15 +209,15 @@
                 26 27 28 29 30 31
                 39 40 41 42 43 44
                 52 53 54 55 56 57
+                /* Other right-hand HRM keys — can chord together */
+                34 35 36 37
             >;
             hold-trigger-on-release;
         };
 
-        /* Right-hand home-row arrows: tap = letter, hold = arrow key.
-         * Uses the same opposite-hand guard so fast right-hand rolls
-         * ("jkl", "kl", "lk") do NOT fire an arrow — an arrow only fires
-         * when the key is held while a key on the LEFT hand is involved,
-         * or held long enough past the tapping term.
+        /* Right-hand hold-arrows (top row Colemak, home row QWERTY) & hold-ESC (M):
+         * tap = letter, hold = arrow/esc.
+         * Opposite-hand guard ensures same-hand rolls type letters rather than firing arrows.
          */
         hra: home_row_arrow {
             compatible = "zmk,behavior-hold-tap";
@@ -379,8 +400,8 @@
             display-name = "BASE";
             bindings = <
 &kp ESC        &kp N1         &kp N2         &kp N3        &kp N4              &kp N5            &kp UP_ARROW      &kp N6              &kp N7         &kp N8        &kp N9         &kp N0            &cw_caps CAPS 0
-&kp TAB        &kp Q          &kp W          &kp F         &kp P               &kp B             &kp DOWN_ARROW    &kp J               &kp L          &kp U         &kp Y          &kp SEMI          &kp BSLH
-&kp BACKSPACE  &hml LCTRL A   &hml LALT R   &hml LGUI S   &hsl LSHFT T         &hla ESC G        &kp LEFT_ARROW    &hra UP M           &hra DOWN N    &hra LEFT E   &hra RIGHT I   &hmr RSHFT O      &kp APOS
+&kp TAB        &kp Q          &kp W          &kp F         &kp P               &kp B             &kp DOWN_ARROW    &kp J               &hra UP L      &hra DOWN U   &hra LEFT Y    &hra RIGHT SEMI   &kp BSLH
+&kp BACKSPACE  &hml LCTRL A   &hml LALT R    &hml LGUI S   &hsl LSHFT T        &hla ESC G        &kp LEFT_ARROW    &hra ESC M          &hsr RSHFT N   &hmr RGUI E   &hmr RALT I    &hmr RCTRL O      &kp APOS
 &sk LSHFT      &kp X          &kp C          &kp D         &kp V               &kp Z             &kp RIGHT_ARROW   &kp K               &kp H          &kp COMMA     &kp DOT        &kp FSLH          &sk RSHFT
 &kp C_MUTE     &kp LCTRL      &kp LGUI       &kp LALT      &kp_slh SYM ENTER   &ltq NAV NAV      &kp ENTER         &kp ESC   &kp_slh NAV SPACE        &lt_thumb SYM TAB  &kp RALT  &kp DEL
             >;
@@ -389,16 +410,16 @@
 
         /* ==================================================================
          * LAYER 1 — NAV / NUM
-         *   Left hand: mouse buttons + left-hand mirror of mods for chords.
-         *   Right hand: arrow cluster + numpad.
+         *   Left hand: PgUp/PgDn, mirror mods, clipboard (Cut/Copy/Dup/Paste/Undo).
+         *   Right hand: numpad (7 8 9 / 4 5 6 / 1 2 3) + operators (+ - * =).
          * ================================================================== */
         nav_layer {
             display-name = "NAV";
             bindings = <
-&trans     &kp F1      &kp F2      &kp F3      &kp F4      &kp F5      TB_U     &kp F6      &kp F7     &kp F8     &kp F9     &kp F10     &kp F11
-&trans     &kp ESC     &mkp LCLK   &mkp MCLK   &mkp RCLK   &mkp MB4    TB_D     &kp PG_UP   &kp N7     &kp N8     &kp N9     &kp MINUS   &kp F12
-&trans     LMODS                                  &mkp MB5  TB_L     &kp N0      &kp N4     &kp N5     &kp N6     &kp PLUS    &kp EQUAL
-&trans     EDIT                                              TB_R     &kp PG_DN   &kp N1     &kp N2     &kp N3     &kp ASTRK   &kp ENTER
+&F12     &kp F1   &kp F2  &kp F3      &kp F4      &kp F5      TB_U     &kp F6      &kp F7     &kp F8     &kp F9     &kp F10     &kp F11
+&trans     &trans      &mkp LCLK   &mkp MCLK   &mkp RCLK      &trans      TB_D     &kp MINUS   &kp N7     &kp N8     &kp N9     &kp MINUS   &kp ASTRK
+&trans     LMODS                                           &trans      TB_L     &kp N0      &kp N4     &kp N5     &kp N6     &kp PLUS    &kp EQUAL
+&trans     &kp LC(X)   &kp LC(C)   &kp LC(D)   &kp PG_DN   &kp PG_UP   TB_R     &kp ENTER   &kp N1     &kp N2     &kp N3     &trans      &trans
 &trans     &trans      &trans      &trans      &trans      &trans      TB_CLK   &trans      &kp DOT    &kp COMMA  &trans     &trans
             >;
             sensor-bindings = <&scroll_encoder>;
@@ -406,35 +427,33 @@
 
         /* ==================================================================
          * LAYER 2 — SYM
-         *   Right hand holds the heavy symbol content.
-         *   Left-hand home row mirrors mods so Shift/Ctrl+symbol chords work.
-         *   Position 42 (left hand `C`) -> `&to CMK` toggles to QWERTY.
+         *   Top-left (pos 0) toggles QWERTY (mirrors kanata @tog_qw).
+         *   Symbol layout mirrors kanata.kbd.
          * ================================================================== */
         sym_layer {
             display-name = "SYM";
             bindings = <
-&trans     &kp N1      &kp N2      &kp N3      &kp N4      &kp N5      TB_U     &kp N6       &kp N7       &kp N8       &kp N9       &kp N0       &trans
-&kp TILDE  &kp EXCL    &kp AT      &kp HASH    &kp DLLR    &kp PRCNT   TB_D     &kp CARET    &kp AMPS     &kp ASTRK    &kp LPAR     &kp RPAR     &kp COLON
-&kp GRAVE  LMODS                                  &kp DQT   TB_L     &kp PLUS     &kp EQUAL    &kp LBRC     &kp RBRC     &kp MINUS    &kp SEMI
-&trans     &kp UNDER   &kp LT      &tog QWERTY &kp GT      &kp BSLH    TB_R     &kp SLASH    &kp QMARK    &kp LBKT     &kp RBKT     &kp UNDER    &trans
-&trans     &trans      &trans      &trans      &trans      &trans      TB_CLK   &trans       &trans       &trans       &trans       &trans
+&tog QWERTY     &kp N1      &kp N2      &kp N3      &kp N4      &kp N5      TB_U     &kp N6       &kp N7       &kp N8       &kp N9       &kp N0       &trans
+&trans          &kp AT     &kp HASH    &kp PIPE    &kp TILDE   &kp GRAVE   TB_D     &kp PLUS     &kp LBRC     &kp RBRC     &kp APOS     &kp DQT      &trans
+&trans          &kp EXCL   &kp PRCNT   &kp CARET   &kp DLLR    &kp AMPS    TB_L     &kp MINUS    &kp LPAR     &kp RPAR     &kp EQUAL    &kp UNDER    &trans
+&trans          &kp UNDER  &kp LT      &kp GT      &kp QMARK   &kp BSLH    TB_R     &kp ASTRK    &kp LBKT     &kp RBKT     &kp FSLH     &kp BSLH     &trans
+&trans          &trans     &trans      &trans      &trans      &trans      TB_CLK   &trans       &trans       &trans       &trans       &trans
             >;
             sensor-bindings = <&scroll_encoder>;
         };
 
         /* ==================================================================
-         * LAYER 3 — QWERTY (toggle via SYM, pos 42)
-         *   Thumb cluster opens SYM (not a SYMC clone); SYM position 42
-         *   (`&tog QWERTY`) toggles this layer back off, returning to BASE.
+         * LAYER 3 — QWERTY (toggle via SYM pos 0)
+         *   Thumb cluster opens SYM; SYM pos 0 (&tog QWERTY) toggles back to BASE.
          * ================================================================== */
         qwerty_layer {
             display-name = "QWERTY";
             bindings = <
-&kp ESC    &kp N1         &kp N2        &kp N3         &kp N4              &kp N5            &kp UP_ARROW      &kp N6              &kp N7         &kp N8        &kp N9         &kp N0            &cw_caps CAPS 0
-&kp TAB    &kp Q          &kp W         &kp E          &kp R               &kp T             &kp DOWN_ARROW    &kp Y               &kp U          &kp I         &kp O          &kp P             &kp BSLH
-&kp BACKSPACE  &hml LCTRL A   &hml LALT S   &hml LGUI D   &hsl LSHFT F  &hla ESC G        &kp LEFT_ARROW    &hra UP H          &hra DOWN J      &hra LEFT K   &hra RIGHT L    &hmr RSHFT SEMI   &kp APOS
-&sk LSHFT  &kp Z          &kp X         &kp C          &kp V               &kp B             &kp RIGHT_ARROW   &kp N               &kp M          &kp COMMA     &kp DOT        &kp FSLH          &sk RSHFT
-&kp C_MUTE &kp LCTRL      &kp LGUI      &kp LALT       &kp_slh SYM ENTER   &ltq SYM SYM      &kp ENTER         &kp ESC   &kp_slh NAV SPACE        &lt_thumb SYM TAB   &kp RALT  &kp DEL
+&kp ESC        &kp N1         &kp N2        &kp N3         &kp N4              &kp N5            &kp UP_ARROW      &kp N6              &kp N7         &kp N8        &kp N9         &kp N0            &cw_caps CAPS 0
+&kp TAB        &kp Q          &kp W         &kp E          &kp R               &kp T             &kp DOWN_ARROW    &kp Y               &kp U          &kp I         &kp O          &kp P             &kp BSLH
+&kp BACKSPACE  &hml LCTRL A   &hml LALT S   &hml LGUI D    &hsl LSHFT F        &hla ESC G        &kp LEFT_ARROW    &hra UP H           &hra DOWN J    &hra LEFT K   &hra RIGHT L   &hsr RSHFT SEMI   &kp APOS
+&sk LSHFT      &kp Z          &kp X         &kp C          &kp V               &kp B             &kp RIGHT_ARROW   &kp N               &kp M          &kp COMMA     &kp DOT        &kp FSLH          &sk RSHFT
+&kp C_MUTE     &kp LCTRL      &kp LGUI      &kp LALT       &kp_slh SYM ENTER   &ltq SYM SYM      &kp ENTER         &kp ESC   &kp_slh NAV SPACE        &lt_thumb SYM TAB   &kp RALT  &kp DEL
             >;
             sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOL_DN>;
         };
@@ -481,7 +500,7 @@
 &to BASE   &kp PSCRN     &kp SLCK      &kp PAUSE_BREAK  &kp KP_NUM    &trans          &kp UP_ARROW     &kp INS       &kp HOME      &kp PG_UP     &trans        &trans        &trans
 &trans     &kp F11       &kp F12       &kp K_APP        &kp CAPS      &trans          &kp DOWN_ARROW   &kp DEL       &kp END       &kp PG_DN     &trans        &trans        &trans
 &trans     LMODS                                                      &trans          &kp LEFT_ARROW   &kp LEFT      &kp DOWN      &kp UP        &kp RIGHT     &trans        &trans
-&trans     EDIT                                                                       &kp RIGHT_ARROW  &kp K_FIND    &kp C_AL_LOCK  &trans        &trans        &trans        &trans
+&trans     EDIT                                                                       &kp RIGHT_ARROW  &kp K_FIND    &kp C_AL_LOCK  &trans        &trans        &trans        &to BASE
 &kp C_MUTE &trans        &trans        &trans           &to BASE      &trans          &kp ENTER        &kp ESC       &to BASE      &trans        &trans        &trans
             >;
             sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOL_DN>;
